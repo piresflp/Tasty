@@ -107,7 +107,7 @@ public class Favorite2Fragment extends Fragment {
 
     private void getListaReceitasFavoritas(){
         SessionManagement sessionManagement = new SessionManagement(getContext());
-        int idUsuario = sessionManagement.getSession();
+        int idUsuario = sessionManagement.getSessionId();
 
         UsuarioService service = RetrofitConfig.createService(UsuarioService.class);
         Call<List<Receita>> call = service.consultarReceitasFavoritas(idUsuario);

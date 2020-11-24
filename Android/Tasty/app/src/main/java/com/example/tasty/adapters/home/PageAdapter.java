@@ -34,7 +34,7 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return new TalherFragment();
             case 2:
                 SessionManagement sessionManagement = new SessionManagement(context);
-                if(sessionManagement.getSession() == -1)
+                if(sessionManagement.getSessionId() == -1)
                     return new FavoriteFragment();
                 else
                     return new Favorite2Fragment();

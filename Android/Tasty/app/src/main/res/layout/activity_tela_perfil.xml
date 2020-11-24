@@ -19,27 +19,6 @@
             android:layout_height="100dp"
             android:src="@drawable/logo"/>
 
-        <TextView
-            android:id="@+id/UsuarioNome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome de usuario"
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/perfil_imagem"
-            android:includeFontPadding="false"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome Real"
-            android:textSize="14sp"
-            android:layout_toRightOf="@+id/perfil_imagem"
-            android:layout_below="@+id/UsuarioNome"
-            android:layout_marginLeft="10dp"/>
-
-
         <ImageButton
             android:id="@+id/btnSair"
             android:padding="10dp"
@@ -160,6 +139,8 @@
             android:layout_marginBottom="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtNomeCompleto"
+                android:editable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@android:drawable/btn_default_small"
@@ -175,6 +156,8 @@
             android:layout_marginBottom="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtNomeUsuario"
+                android:editable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@android:drawable/btn_default_small"
@@ -190,6 +173,8 @@
             android:layout_marginBottom="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtEmail"
+                android:editable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@android:drawable/btn_default_small"
