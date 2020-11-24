@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.main.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="75sp"
+            android:orientation="horizontal">
+            //android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="100sp"
+                android:layout_height="75sp"
+                android:padding="5sp"
+                android:src="@drawable/logo">
+            </ImageView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true">
+
+                <ImageButton
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:background="@drawable/lupa"
+                    android:layout_marginRight="20sp"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/perfil_imagem"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:background="@drawable/perfil_icon"
+                    android:layout_marginRight="10sp"></ImageButton>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/TabBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="#e90b0a">
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/casa" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabTalher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/talheres" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/coracao"/>
+            </com.google.android.material.tabs.TabLayout>
+        </RelativeLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF6122"
+    android:orientation="vertical"
+    tools:context=".fragments.FavoriteFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="30dp"
+            android:text="PARA ACESSAR A ABA DE RECEITAS FAVORITAS ENTRE EM SUA CONTA"
+            android:textAlignment="center"
+            android:textColor="#DDDDDD" />
+
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/rounded_corners"
+            android:text="ENTRAR"
+            android:textColor="@drawable/button_text_color"/>
+
+        <TextView
+            android:id="@+id/txtCadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CRIE UMA CONTA AGORA"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

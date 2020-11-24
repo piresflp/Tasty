@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.usuario.visualizar.VisualizarPerfilActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="20dp"
+        android:background="#FF6122">
+
+        <ImageView
+            android:id="@+id/perfil_imagem"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:id="@+id/UsuarioNome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome de usuario"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/perfil_imagem"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome Real"
+            android:textSize="14sp"
+            android:layout_toRightOf="@+id/perfil_imagem"
+            android:layout_below="@+id/UsuarioNome"
+            android:layout_marginLeft="10dp"/>
+
+
+        <ImageButton
+            android:id="@+id/btnSair"
+            android:padding="10dp"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="275dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/logout_icon"
+            android:backgroundTint="@color/colorPrimary"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded_corners"/>
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:text="Sair"
+            android:layout_marginLeft="285dp"
+            android:layout_marginTop="65dp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="-100dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#FF5722"
+            app:cardElevation="10dp"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:layout_marginTop="-15dp">
+
+
+                <TextView
+                    android:id="@+id/qtsReceitas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="4"
+                    android:textSize="40sp"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:id="@+id/tvReceitas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Receitas"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/qtsReceitas"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#FF5722"
+            app:cardElevation="10dp"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:layout_marginTop="-15dp">
+
+                <TextView
+                    android:id="@+id/qtsFavoritos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="72"
+                    android:textSize="40sp"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:id="@+id/tvFavoritos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Favoritos"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/qtsFavoritos"
+                    android:layout_centerInParent="true"/>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome Completo"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/btn_default_small"
+                android:drawablePadding="10dp"
+                android:text=""/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome de Usuário"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/btn_default_small"
+                android:drawablePadding="10dp"
+                android:text=""/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/btn_default_small"
+                android:drawablePadding="10dp"
+                android:text=""/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alterar dados"
+            android:background="#FF5622"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
