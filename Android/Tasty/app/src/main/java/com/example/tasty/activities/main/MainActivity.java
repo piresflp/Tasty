@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tasty.R;
+import com.example.tasty.activities.receita.adicionar.AdicionarReceita;
+import com.example.tasty.activities.usuario.LoginCadastroActivity;
 import com.example.tasty.activities.usuario.visualizar.VisualizarPerfilActivity;
 import com.example.tasty.adapters.home.PageAdapter;
 import com.example.tasty.sessionManagement.SessionManagement;
@@ -55,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                irParaOutraActivity(VisualizarPerfilActivity.class);
+                SessionManagement sessionManagement = new SessionManagement(getApplicationContext());
+                if(sessionManagement.getSessionId() == -1)
+                    irParaOutraActivity(LoginCadastroActivity.class);
+                else
+                    irParaOutraActivity(VisualizarPerfilActivity.class);
             }
         });
     }

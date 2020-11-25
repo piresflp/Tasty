@@ -12,9 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.tasty.activities.main.MainActivity;
 import com.example.tasty.activities.receita.adicionar.AdicionarReceita;
 import com.example.tasty.R;
 import com.example.tasty.activities.receita.ReceitaActivity;
+import com.example.tasty.activities.usuario.LoginCadastroActivity;
+import com.example.tasty.retrofit.models.Receita;
+import com.example.tasty.sessionManagement.SessionManagement;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -81,17 +85,26 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AdicionarReceita.class);
-                startActivity(intent);
+                SessionManagement sessionManagement = new SessionManagement(getContext());
+                if(sessionManagement.getSessionId() == -1)
+                    irParaOutraActivity(LoginCadastroActivity.class);
+                else
+                    irParaOutraActivity(AdicionarReceita.class);
+
             }
         });
 
         receitaHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReceitaActivity.class);
-                startActivity(intent);
+                irParaOutraActivity(ReceitaActivity.class);
             }
         });
+    }
+
+    private void irParaOutraActivity(Class classOutraActivity)
+    {
+        Intent intentOutraActivity = new Intent(getActivity(), classOutraActivity);
+        startActivity(intentOutraActivity);
     }
 }

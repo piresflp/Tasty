@@ -183,14 +183,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Alterar dados"
-            android:background="#FF5622"
-            android:layout_marginTop="10dp"/>
-
     </LinearLayout>
 
 
