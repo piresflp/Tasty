@@ -8,6 +8,8 @@ public class Receita {
     private String categoria;
     private String ingredientes;
     private String modoDePreparo;
+    private Usuario fkReceitaUsuario;
+    private Categoria fkReceitaCategoria;
 
 
     public Receita() {
@@ -103,7 +105,7 @@ public class Receita {
     }
 
     public String toString(){
-        return "Id: "+this.id+"; Titulo: "+this.titulo;
+        return "Id: "+this.id+"; Titulo: "+this.titulo+"; Usuario: "+this.fkReceitaUsuario.toString()+"; Categoria: "+this.fkReceitaCategoria.toString();
     }
 
     /*public boolean equals(Object obj){
