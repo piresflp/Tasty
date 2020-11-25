@@ -15,6 +15,14 @@ module.exports = {
         const listaReceitaFavoritadas = await Receita.findAll({
             where: { idUsuario: id },
             attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],
+            include: [{
+                    association: 'fkReceitaUsuario', 
+                    attributes: ['id', 'nome', 'nomeDeUsuario']
+                },
+                {
+                    association: 'fkReceitaCategoria',
+                    attributes: ['id', 'nome']
+                }]    
         });
 
         if(!listaReceitaFavoritadas.length > 0)
