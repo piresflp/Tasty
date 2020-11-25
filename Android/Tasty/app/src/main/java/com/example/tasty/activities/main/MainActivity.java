@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         tabLayout = findViewById(R.id.TabBar);
         tabHome = findViewById(R.id.tabHome);
         tabTalher = findViewById(R.id.tabTalher);

@@ -76,7 +76,7 @@
                     android:background="#A1AAAAAA" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tvNomeUsuarioReceita"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -158,6 +158,7 @@
                         android:textSize="10dp"/>
 
                     <TextView
+                        android:id="@+id/tvPorcoes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -184,6 +185,7 @@
                         android:textSize="10dp"/>
 
                     <TextView
+                        android:id="@+id/tvTempo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -229,6 +231,7 @@
                     android:background="#A1AAAAAA"/>
 
                 <TextView
+                    android:id="@+id/tvIngredientes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-  1,2 kg de carne moída \n\n-  1/2 cebola picada\n\n-  2 colheres de salscha picada\n\n"
@@ -270,6 +273,7 @@
                     android:background="#A1AAAAAA"/>
 
                 <TextView
+                    android:id="@+id/tvPreparo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1  Em um recipiente, coloque a carne moída e adicione a cebola picada, a salsinha e cebolinha picadas, a mostarda, o soco de limão.\n\n2  Com as mãos, faça uma mistura homogenea.\n\n3  Separe a massa em duas porções iguais.\n\n"

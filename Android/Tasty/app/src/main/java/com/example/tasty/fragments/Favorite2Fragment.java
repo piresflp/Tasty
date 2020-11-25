@@ -1,14 +1,19 @@
 package com.example.tasty.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +25,8 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 import com.example.tasty.R;
+import com.example.tasty.activities.receita.ReceitaActivity;
+import com.example.tasty.adapters.receita.ReceitaFavAdapter;
 import com.example.tasty.errorHandling.ErroJson;
 import com.example.tasty.retrofit.config.RetrofitConfig;
 import com.example.tasty.retrofit.models.Receita;
@@ -89,12 +96,8 @@ public class Favorite2Fragment extends Fragment {
 
         //LinearLayout receitaFav = view.findViewById(R.id.receitafav);
         //receitasFavList = new ArrayList<>();
-        getListaReceitasFavoritas();
+        getListaReceitasFavoritas(view, this.getContext());
         //Toast.makeText(getContext(), listaReceitasFavoritas.toString(), Toast.LENGTH_LONG).show();
-
-        /*ReceitaFavAdapter adapter = new ReceitaFavAdapter(this.getContext(),R.layout.receita_fav_item, listaReceitasFavoritas);
-        ListView listViewReceita = view.findViewById(R.id.listViewReceitaFav);
-        listViewReceita.setAdapter(adapter);*/
 
         /*receitaFav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,9 +106,10 @@ public class Favorite2Fragment extends Fragment {
                 startActivity(intent);
             }
         });*/
+
     }
 
-    private void getListaReceitasFavoritas(){
+    private void getListaReceitasFavoritas(final View view, final Context context){
         SessionManagement sessionManagement = new SessionManagement(getContext());
         int idUsuario = sessionManagement.getSessionId();
 
@@ -121,7 +125,21 @@ public class Favorite2Fragment extends Fragment {
                     }
                     else {
                         listaReceitasFavoritas = response.body();
-                        Toast.makeText(getContext(), listaReceitasFavoritas.toString(), Toast.LENGTH_LONG).show();
+                        final ReceitaFavAdapter adapter = new ReceitaFavAdapter(context,R.layout.receita_fav_item, listaReceitasFavoritas);
+                        final ListView listViewReceita = view.findViewById(R.id.listViewReceitaFav);
+                        listViewReceita.setAdapter(adapter);
+
+                        listViewReceita.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Gson gson = new Gson();
+                                String receitaJson = gson.toJson(listaReceitasFavoritas.get(position));
+                                Intent intent = new Intent(getActivity(), ReceitaActivity.class);
+                                intent.putExtra("receita", receitaJson);
+                                startActivity(intent);
+                            }
+                        });
+
                     }
                 }
                 else{
