@@ -2,6 +2,7 @@ const express = require('express');
 const ReceitaController = require('../controllers/ReceitaController');
 const routes = express.Router();
 
+routes.get('/receita/favorito/:id', ReceitaController.consultarQuantidadeFavoritos);
 routes.get('/receita/:id', ReceitaController.consultarPorID);
 routes.get('/receita', ReceitaController.consultarTodos);
 routes.post('/receita', ReceitaController.inserir);

@@ -1,8 +1,19 @@
 const Receita = require('../models/Receita');
 const Usuario = require('../models/Usuario');
 const Categoria = require('../models/Categoria');
+const Favorito = require('../models/Favorito');
 
 module.exports = {
+    async consultarQuantidadeFavoritos(req, res){
+        const { id } = req.params;
+
+        let qtdFavoritos = await Favorito.count({
+            where: { idReceita: id }
+        })
+
+        return res.json(qtdFavoritos.toString());
+    },
+
     async consultarPorID(req, res){
         const { id } = req.params;
 

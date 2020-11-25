@@ -98,6 +98,8 @@ public class Receita {
         return this.modoDePreparo;
     }
 
+    public Usuario getFkReceitaUsuario() {return this.fkReceitaUsuario;}
+
     public void setModoDePreparo(String modoDePreparo) throws Exception{
         if(modoDePreparo == null || modoDePreparo.equals(""))
             throw new Exception("Modo de preparo inválido");

@@ -82,7 +82,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:text="Por NomeDeUsuario"
-                    android:textSize="10dp" />
+                    android:textSize="13dp" />
 
                 <View
                     android:id="@+id/divider4"
@@ -128,6 +128,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvQtdFavoritos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nº DE PESSOAS DE FAVORITARAM"

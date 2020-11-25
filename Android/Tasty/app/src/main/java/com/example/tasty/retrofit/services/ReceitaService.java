@@ -11,6 +11,9 @@ import retrofit.http.POST;
 import retrofit.http.Path;
 
 public interface ReceitaService {
+    @GET("receita/favorito/{id}")
+    Call<String> consultarQuantidadeFavoritos(@Path("id") int id);
+
     @GET("receita")
     Call<List<Receita>> consultarReceitas();
 
