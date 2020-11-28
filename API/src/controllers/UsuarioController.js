@@ -1,5 +1,6 @@
 const Usuario = require('../models/Usuario');
 const Receita = require('../models/Receita');
+const Favorito = require('../models/Favorito');
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -31,6 +32,27 @@ module.exports = {
                 .json({error: 'Nenhuma receita foi favoritada ainda.'});
 
         return res.json(listaReceitaFavoritadas);
+    },
+
+    async verificarFavorito(req, res)
+    {
+        const {id, idReceita} = req.params;
+
+        const isFavorito = await Favorito.findAll({
+            where: {
+                idUsuario: id,
+                idReceita: idReceita
+            }
+        })
+
+        console.log(isFavorito.length)
+        if(isFavorito.length > 0)
+            return res
+                .json("1")
+
+        //else
+        return res
+            .json("0")
     },
 
     async inserir(req, res){

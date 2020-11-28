@@ -6,6 +6,7 @@ import com.example.tasty.retrofit.models.Usuario;
 import java.util.List;
 
 import retrofit.Call;
+import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -14,14 +15,11 @@ import retrofit.http.PUT;
 import retrofit.http.Path;
 
 public interface UsuarioService {
-    @GET("usuario")
-    Call<List<Usuario>> consultarUsuarios();
+    @GET("usuario/favorito/{id}/{idReceita}")
+    Call<String> verificarFavorito(@Path("id") int id, @Path("idReceita") int idReceita);
 
     @GET("usuario/{id}")
     Call<List<Receita>> consultarReceitasFavoritas(@Path("id") int id);
-
-    @GET("usuario/{id}")
-    Call<Usuario> consultarUsuarioPorID(@Path("id") int id);
 
     @POST("usuario")
     Call<Usuario> inserirUsuario(@Body Usuario usuario);

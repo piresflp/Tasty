@@ -7,7 +7,7 @@ module.exports = {
     async consultarQuantidadeFavoritos(req, res){
         const { id } = req.params;
 
-        let qtdFavoritos = await Favorito.count({
+        const qtdFavoritos = await Favorito.count({
             where: { idReceita: id }
         })
 
