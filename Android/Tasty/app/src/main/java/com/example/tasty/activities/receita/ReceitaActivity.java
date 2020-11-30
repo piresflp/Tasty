@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +19,9 @@ import retrofit.Retrofit;
 import com.example.tasty.R;
 import com.example.tasty.errorHandling.ErroJson;
 import com.example.tasty.retrofit.config.RetrofitConfig;
+import com.example.tasty.retrofit.models.Favorito;
 import com.example.tasty.retrofit.models.Receita;
+import com.example.tasty.retrofit.services.FavoritoService;
 import com.example.tasty.retrofit.services.ReceitaService;
 import com.example.tasty.retrofit.services.UsuarioService;
 import com.example.tasty.sessionManagement.SessionManagement;
@@ -26,8 +30,10 @@ import com.google.gson.Gson;
 import java.util.concurrent.CompletableFuture;
 
 public class ReceitaActivity extends AppCompatActivity {
+    int idUsuario;
     Receita receita;
     TextView tvNomeReceita, tvNomeUsuarioReceita, tvPorcoes, tvTempo ,tvIngredientes, tvPreparo, tvQtdFavoritos;
+    ImageButton btnFavorito;
     Boolean isFavoritada;
 
     @Override
@@ -42,6 +48,10 @@ public class ReceitaActivity extends AppCompatActivity {
         tvIngredientes = findViewById(R.id.tvIngredientes);
         tvPreparo = findViewById(R.id.tvPreparo);
         tvQtdFavoritos = findViewById(R.id.tvQtdFavoritos);
+        btnFavorito = findViewById(R.id.btnFavorito);
+
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        idUsuario = session.getSessionId();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,18 +76,19 @@ public class ReceitaActivity extends AppCompatActivity {
     }
 
     private void verificarBotaoFavorito(){
-        SessionManagement session = new SessionManagement(getApplicationContext());
-        int idUsuario = session.getSessionId();
-
         UsuarioService service = RetrofitConfig.createService(UsuarioService.class);
         Call<String> call = service.verificarFavorito(idUsuario, receita.getId());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
                 if (response.body().equals("0"))
-                    isFavoritada = false;
+                    // receita não está favoritada
+                    // FALTA SETAR ANIMACAO BOTAO
+                    btnFavorito.setOnClickListener(adicionarFavorito);
                 else
-                    isFavoritada = true;
+                    // receita favoritada
+                    // FALTA SETAR ANIMACAO BOTAO
+                    btnFavorito.setOnClickListener(removerFavorito);
             }
 
             @Override
@@ -86,6 +97,78 @@ public class ReceitaActivity extends AppCompatActivity {
             }
         });
     }
+
+    private View.OnClickListener removerFavorito = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FavoritoService service = RetrofitConfig.createService(FavoritoService.class);
+            Call<Favorito> call = service.removerFavorito(idUsuario, receita.getId());
+            call.enqueue(new Callback<Favorito>() {
+                @Override
+                public void onResponse(Response<Favorito> response, Retrofit retrofit) {
+                    if(response.isSuccess()){
+                        // trocar animação botão
+                        btnFavorito.setOnClickListener(adicionarFavorito);
+                    }
+                    else {
+                        try {
+                            Gson gson = new Gson();
+                            ErroJson erro = gson.fromJson(response.errorBody().string(), ErroJson.class);
+                            Toast.makeText(getApplicationContext(), erro.getError(), Toast.LENGTH_SHORT).show();
+                        }
+                        catch (Exception e){
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Erro: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    };
+
+    private View.OnClickListener adicionarFavorito = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try {
+                Favorito novoFavorito = new Favorito(idUsuario, receita.getId());
+
+                FavoritoService service = RetrofitConfig.createService(FavoritoService.class);
+                Call<Favorito> call = service.inserirFavorito(novoFavorito);
+                call.enqueue(new Callback<Favorito>() {
+                    @Override
+                    public void onResponse(Response<Favorito> response, Retrofit retrofit) {
+                        if(response.isSuccess()) {
+                            // trocar animação botao
+                            btnFavorito.setOnClickListener(removerFavorito);
+                        }
+                        else {
+                            try {
+                                Gson gson = new Gson();
+                                ErroJson erro = gson.fromJson(response.errorBody().string(), ErroJson.class);
+                                Toast.makeText(getApplicationContext(), erro.getError(), Toast.LENGTH_SHORT).show();
+                            }
+                            catch (Exception e){
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Erro: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            catch (Exception e){
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        }
+    };
 
     private void setQtdFavoritos(){
         int idReceita = receita.getId();

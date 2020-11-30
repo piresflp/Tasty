@@ -107,6 +107,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
+                        android:id="@+id/btnFavorito"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="20dp"
