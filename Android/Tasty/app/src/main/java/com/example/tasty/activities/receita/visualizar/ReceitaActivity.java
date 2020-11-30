@@ -1,4 +1,4 @@
-package com.example.tasty.activities.receita;
+package com.example.tasty.activities.receita.visualizar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

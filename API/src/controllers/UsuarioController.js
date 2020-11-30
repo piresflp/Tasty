@@ -45,7 +45,6 @@ module.exports = {
             }
         })
 
-        console.log(isFavorito.length)
         if(isFavorito.length > 0)
             return res
                 .json("1")
@@ -56,12 +55,6 @@ module.exports = {
     },
 
     async inserir(req, res){
-        if(req.body == null)
-            return res
-                .code(400)
-                .json({error: 'Informações inválidas!'});
-
-
         const isNomeUsuarioExistente = await Usuario.findAll({ where: {nomeDeUsuario: req.body.nomeDeUsuario}});
         if(isNomeUsuarioExistente.length > 0 ){
             return res
