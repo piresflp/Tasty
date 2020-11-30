@@ -3,8 +3,7 @@ const FavoritoController = require('../controllers/FavoritoController');
 
 const routes = express.Router();
 
-//routes.get('/favorito/:idUsuario', FavoritoController.consultarTodosDoUsuario);
 routes.post('/favorito', FavoritoController.inserir);
-routes.delete('/favorito/:id', FavoritoController.deletar);
+routes.delete('/favorito/:idUsuario/:idReceita', FavoritoController.deletar);
 
 module.exports = routes;

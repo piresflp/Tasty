@@ -24,20 +24,16 @@ module.exports = {
     },
 
     async deletar(req, res){
-        const isUsuarioExistente = await Usuario.findByPk(req.params.idUsuario);
-        if(!isUsuarioExistente)
-            return res
-                .status(401)
-                .json({error: 'Usuário não encontrado!'});
+        const {idUsuario, idReceita} = req.params;
 
-        const isReceitaExistente = await Receita.findByPk(req.params.idReceita);
-        if(!isReceitaExistente)
-            return res
-                .status(401)
-                .json({error: 'Receita não encontrada!'});
-        
-        await categoriaDesejada.destroy();
+        await Favorito.destroy({
+            where: {
+                idUsuario: idUsuario,
+                idReceita: idReceita
+            }
+        });
+
         return res
-            .json({message: 'Receita deletada com sucesso!'});
+            .json({message: 'Favorito deletado com sucesso!'});
     },
 };

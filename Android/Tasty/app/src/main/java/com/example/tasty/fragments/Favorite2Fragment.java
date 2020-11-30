@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 import com.example.tasty.R;
-import com.example.tasty.activities.receita.ReceitaActivity;
+import com.example.tasty.activities.receita.visualizar.ReceitaActivity;
 import com.example.tasty.adapters.receita.ReceitaFavAdapter;
 import com.example.tasty.errorHandling.ErroJson;
 import com.example.tasty.retrofit.config.RetrofitConfig;

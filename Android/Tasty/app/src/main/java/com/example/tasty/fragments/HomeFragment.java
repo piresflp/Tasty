@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.tasty.activities.main.MainActivity;
 import com.example.tasty.activities.receita.adicionar.AdicionarReceita;
 import com.example.tasty.R;
-import com.example.tasty.activities.receita.ReceitaActivity;
+import com.example.tasty.activities.receita.visualizar.ReceitaActivity;
 import com.example.tasty.activities.usuario.LoginCadastroActivity;
-import com.example.tasty.retrofit.models.Receita;
 import com.example.tasty.sessionManagement.SessionManagement;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

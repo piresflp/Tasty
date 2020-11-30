@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".activities.usuario.LoginCadastroActivity" />
         <activity
-            android:name=".activities.receita.ReceitaActivity"
+            android:name=".activities.receita.visualizar.ReceitaActivity"
             android:parentActivityName=".activities.main.MainActivity" />
         <activity android:name=".activities.main.MainActivity">
             <intent-filter>
