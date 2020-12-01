@@ -28,6 +28,7 @@ import com.example.tasty.activities.receita.visualizar.ReceitaActivity;
 import com.example.tasty.adapters.receita.ReceitaFavAdapter;
 import com.example.tasty.errorHandling.ErroJson;
 import com.example.tasty.retrofit.config.RetrofitConfig;
+import com.example.tasty.retrofit.models.Favorito;
 import com.example.tasty.retrofit.models.Receita;
 import com.example.tasty.retrofit.services.UsuarioService;
 import com.example.tasty.sessionManagement.SessionManagement;
@@ -92,20 +93,7 @@ public class Favorite2Fragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        //LinearLayout receitaFav = view.findViewById(R.id.receitafav);
-        //receitasFavList = new ArrayList<>();
         getListaReceitasFavoritas(view, this.getContext());
-        //Toast.makeText(getContext(), listaReceitasFavoritas.toString(), Toast.LENGTH_LONG).show();
-
-        /*receitaFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReceitaActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
     }
 
     private void getListaReceitasFavoritas(final View view, final Context context){
@@ -113,16 +101,17 @@ public class Favorite2Fragment extends Fragment {
         int idUsuario = sessionManagement.getSessionId();
 
         UsuarioService service = RetrofitConfig.createService(UsuarioService.class);
-        Call<List<Receita>> call = service.consultarReceitasFavoritas(idUsuario);
-        call.enqueue(new Callback<List<Receita>>() {
+        Call<List<Favorito>> call = service.consultarReceitasFavoritas(idUsuario);
+        call.enqueue(new Callback<List<Favorito>>() {
             @Override
-            public void onResponse(Response<List<Receita>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<Favorito>> response, Retrofit retrofit) {
                 if(response.isSuccess()){
                     if(response.body().size() == 0){
                         Toast.makeText(getContext(), "a", Toast.LENGTH_LONG).show();
                         // mostrar na tela que nenhuma receita foi favoritada
                     }
                     else {
+                        Toast.makeText(getActivity(), "pires vc eh foda demais", Toast.LENGTH_LONG).show();
                         listaReceitasFavoritas = response.body();
                         final ReceitaFavAdapter adapter = new ReceitaFavAdapter(context,R.layout.receita_fav_item, listaReceitasFavoritas);
                         final ListView listViewReceita = view.findViewById(R.id.listViewReceitaFav);
