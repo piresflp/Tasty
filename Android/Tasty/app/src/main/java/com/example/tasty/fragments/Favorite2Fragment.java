@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.Call;
@@ -40,8 +42,8 @@ import com.google.gson.Gson;
  * create an instance of this fragment.
  */
 public class Favorite2Fragment extends Fragment {
-
-    List<Receita> listaReceitasFavoritas;
+    TextView tvQtdReceitasFavoritas;
+    List<Favorito> listaFavoritos;
     ArrayList<Receita> receitasFavList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -111,8 +113,15 @@ public class Favorite2Fragment extends Fragment {
                         // mostrar na tela que nenhuma receita foi favoritada
                     }
                     else {
-                        Toast.makeText(getActivity(), "pires vc eh foda demais", Toast.LENGTH_LONG).show();
-                        listaReceitasFavoritas = response.body();
+                        listaFavoritos = response.body();
+                        tvQtdReceitasFavoritas = view.findViewById(R.id.tvQtdReceitasFavoritas);
+                        tvQtdReceitasFavoritas.setText(String.valueOf(listaFavoritos.size() + " RECEITAS FAVORITADAS"));
+
+                        List<Receita> listaReceitasFavoritas = new LinkedList<Receita>();
+                        for(Favorito favorito : listaFavoritos){
+                            listaReceitasFavoritas.add(favorito.getFkFavoritoReceita());
+                        }
+
                         final ReceitaFavAdapter adapter = new ReceitaFavAdapter(context,R.layout.receita_fav_item, listaReceitasFavoritas);
                         final ListView listViewReceita = view.findViewById(R.id.listViewReceitaFav);
                         listViewReceita.setAdapter(adapter);
@@ -121,7 +130,7 @@ public class Favorite2Fragment extends Fragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Gson gson = new Gson();
-                                String receitaJson = gson.toJson(listaReceitasFavoritas.get(position));
+                                String receitaJson = gson.toJson(listaFavoritos.get(position));
                                 Intent intent = new Intent(getActivity(), ReceitaActivity.class);
                                 intent.putExtra("receita", receitaJson);
                                 startActivity(intent);
