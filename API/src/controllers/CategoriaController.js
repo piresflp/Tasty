@@ -18,7 +18,8 @@ module.exports = {
 
     async consultarTodos(req, res){
         const listaCategorias = await Categoria.findAll({
-            attributes: ['id', 'nome'],
+            attributes: ['id', 'nome'],            
+            order: ['nome']
         });
 
         if(listaCategorias.length == 0)
