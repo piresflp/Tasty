@@ -10,6 +10,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tasty.R;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
+import com.example.tasty.retrofit.config.RetrofitConfig;
+import com.example.tasty.retrofit.models.Categoria;
+import com.example.tasty.retrofit.services.CategoriaService;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,7 +27,7 @@ import com.example.tasty.R;
  * create an instance of this fragment.
  */
 public class TalherFragment extends Fragment {
-
+    List<Categoria> listaCategorias;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,5 +73,25 @@ public class TalherFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_talher, container, false);
+    }
+
+    private void carregarCategorias(){
+        CategoriaService service = RetrofitConfig.createService(CategoriaService.class);
+        Call<List<Categoria>> call = service.consultarTodasCategorias();
+        call.enqueue(new Callback<List<Categoria>>() {
+            @Override
+            public void onResponse(Response<List<Categoria>> response, Retrofit retrofit) {
+                if(response.isSuccess()){
+                    listaCategorias = response.body();
+                }
+                else{}
+                //mostrar na tela erro ao carregar categorias
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                //mostrar na tela erro ao carregar categorias
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package com.example.tasty.retrofit.services;
 
+import com.example.tasty.retrofit.models.DadosPerfilUsuario;
+import com.example.tasty.retrofit.models.Favorito;
 import com.example.tasty.retrofit.models.Receita;
 import com.example.tasty.retrofit.models.Usuario;
 
@@ -18,8 +20,11 @@ public interface UsuarioService {
     @GET("usuario/favorito/{id}/{idReceita}")
     Call<String> verificarFavorito(@Path("id") int id, @Path("idReceita") int idReceita);
 
+    @GET("usuario/perfil/{id}")
+    Call<DadosPerfilUsuario> consultarDadosPerfilUsuario(@Path("id") int id);
+
     @GET("usuario/{id}")
-    Call<List<Receita>> consultarReceitasFavoritas(@Path("id") int id);
+    Call<List<Favorito>> consultarReceitasFavoritas(@Path("id") int id);
 
     @POST("usuario")
     Call<Usuario> inserirUsuario(@Body Usuario usuario);

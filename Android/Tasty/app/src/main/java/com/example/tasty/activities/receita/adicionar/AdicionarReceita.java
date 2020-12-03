@@ -8,38 +8,41 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.example.tasty.ExpandableHeightListView;
-import com.example.tasty.R;
-import com.example.tasty.activities.main.MainActivity;
-import com.example.tasty.adapters.receita.AddIngredienteAdapter;
-import com.example.tasty.adapters.receita.AddPreparoAdapter;
-import com.example.tasty.adapters.receita.ReceitaFavAdapter;
-import com.example.tasty.retrofit.config.RetrofitConfig;
-import com.example.tasty.retrofit.models.Receita;
-import com.example.tasty.retrofit.services.ReceitaService;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class AdicionarReceita extends AppCompatActivity {
 
+import com.example.tasty.ExpandableHeightListView;
+import com.example.tasty.R;
+
+import com.example.tasty.activities.main.MainActivity;
+import com.example.tasty.adapters.receita.AddIngredienteAdapter;
+import com.example.tasty.adapters.receita.AddPreparoAdapter;
+import com.example.tasty.retrofit.config.RetrofitConfig;
+import com.example.tasty.retrofit.models.Receita;
+import com.example.tasty.retrofit.services.ReceitaService;
+
+import com.example.tasty.retrofit.config.RetrofitConfig;
+import com.example.tasty.retrofit.models.Categoria;
+import com.example.tasty.retrofit.services.CategoriaService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+public class AdicionarReceita extends AppCompatActivity {
+    List<String> listaCategoriaString;
     List<String> ingredientes = new ArrayList<String>();
     List<String> preparo = new ArrayList<String>();
 
@@ -52,8 +55,8 @@ public class AdicionarReceita extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
+        listaCategoriaString = new ArrayList<String>();
         ImageButton btnAddIngredientes = findViewById(R.id.btnAddIngredientes);
         ImageButton btnAddPreparo = findViewById(R.id.btnAddPreparo);
         Button btnAddReceita = findViewById(R.id.btnAddReceita);
@@ -61,33 +64,8 @@ public class AdicionarReceita extends AppCompatActivity {
         final EditText tempo = findViewById(R.id.edtAddTempo);
         final EditText porcao = findViewById(R.id.edtAddPorcao);
 
-        String[] categorias = new String[]{
-                "Categoria",
-                "Bolos e tortas doces",
-                "Carnes",
-                "Massas",
-                "Bebidas"
-        };
-
-        final List<String> categoriaList = new ArrayList<>(Arrays.asList(categorias));
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                this,android.R.layout.simple_spinner_item,categoriaList){
-            @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        };
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerArrayAdapter);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        carregarCategorias(spinner);
 
         btnAddIngredientes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +121,39 @@ public class AdicionarReceita extends AppCompatActivity {
         });
     }
 
-    public void openDialogIngredientes() {
+    private void carregarCategorias(final Spinner spinner){
+        CategoriaService service = RetrofitConfig.createService(CategoriaService.class);
+        Call<List<Categoria>> call = service.consultarTodasCategorias();
+        call.enqueue(new Callback<List<Categoria>>() {
+            @Override
+            public void onResponse(Response<List<Categoria>> response, Retrofit retrofit) {
+                if(response.isSuccess()){
+                    List<Categoria> listaCategorias = response.body();
+
+                    for(Categoria categoria : listaCategorias)
+                        listaCategoriaString.add(categoria.getNome());
+
+                    final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,listaCategoriaString){
+                        @Override
+                        public boolean isEnabled(int position){
+                            if(position == 0)
+                                return false;
+                            return true;
+                        }
+                    };
+                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(spinnerArrayAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getApplicationContext(), "Erro ao carregar categorias: "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void openDialogIngredientes() {
         final Dialog dialog = new Dialog(this); // Context, this, etc.
         dialog.setContentView(R.layout.dialog_ingredientes);
         dialog.show();
@@ -172,7 +182,7 @@ public class AdicionarReceita extends AppCompatActivity {
         });
     }
 
-    public void openDialogPreparo() {
+    private void openDialogPreparo() {
         final Dialog dialog = new Dialog(this); // Context, this, etc.
         dialog.setContentView(R.layout.dialog_preparo);
         dialog.show();

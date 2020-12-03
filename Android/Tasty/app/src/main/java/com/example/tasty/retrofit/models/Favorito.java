@@ -2,6 +2,9 @@ package com.example.tasty.retrofit.models;
 
 public class Favorito {
     int id, idUsuario, idReceita;
+    Receita fkFavoritoReceita;
+
+    public Favorito(){}
 
     public Favorito(int idUsuario, int idReceita) throws Exception{
         setIdUsuario(idUsuario);
@@ -20,6 +23,8 @@ public class Favorito {
         return this.idUsuario;
     }
 
+    public Receita getFkFavoritoReceita() {return this.fkFavoritoReceita;}
+
     public void setId(int id) throws Exception{
         if(id <= 0)
             throw new Exception("ID inválido!");
@@ -36,5 +41,9 @@ public class Favorito {
         if(idReceita <= 0)
             throw new Exception("Id de receita inválido!");
         this.idReceita = idReceita;
+    }
+
+    public void setFkFavoritoReceita(Receita fkFavoritoReceita){
+        this.fkFavoritoReceita = fkFavoritoReceita;
     }
 }

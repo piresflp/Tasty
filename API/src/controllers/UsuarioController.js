@@ -13,7 +13,17 @@ module.exports = {
                 .status(400)
                 .json({error: 'Usuário não encontrado!'});
 
-        const listaReceitaFavoritadas = await Receita.findAll({
+        const listaReceitasFavoritadas = await Favorito.findAll({
+            where: {idUsuario: id},
+            attributes: [],
+            include: [{
+                association: 'fkFavoritoReceita',
+                attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento']
+            }]
+        });
+
+
+        /*const listaReceitasFavoritadas = await Receita.findAll({
             where: { idUsuario: id },
             attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],
             include: [{
@@ -24,14 +34,38 @@ module.exports = {
                     association: 'fkReceitaCategoria',
                     attributes: ['id', 'nome']
                 }]    
-        });
+        });*/
 
-        if(!listaReceitaFavoritadas.length > 0)
+        if(!listaReceitasFavoritadas.length > 0)
             return res
                 .status(400)
                 .json({error: 'Nenhuma receita foi favoritada ainda.'});
 
-        return res.json(listaReceitaFavoritadas);
+        return res.json(listaReceitasFavoritadas);
+    },
+
+    async consultarDadosPerfilUsuario(req, res)
+    {
+        const {id} = req.params;
+
+        const isUsuarioExistente = await Usuario.findByPk(id);
+        if(!isUsuarioExistente)
+            return res
+                .status(400)
+                .json({error: 'Usuário não encontrado!'});
+
+        const qtdReceitasCriadas = await Receita.count({
+            where: {idUsuario: id}
+        });
+
+        const qtdReceitasFavoritadas = await Favorito.count({
+            where: {idUsuario: id}
+        });
+
+        return res.json({
+            qtdReceitasCriadas,
+            qtdReceitasFavoritadas
+        })
     },
 
     async verificarFavorito(req, res)

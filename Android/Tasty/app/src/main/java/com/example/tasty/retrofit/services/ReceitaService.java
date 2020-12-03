@@ -22,14 +22,4 @@ public interface ReceitaService {
 
     @POST("receita")
     Call<Receita> inserirReceita(@Body Receita receita);
-    /*
-    @POST("usuario/login")
-    Call<Usuario> autenticarUsuario(@Body Usuario usuario);
-
-    @PUT("usuario/{id}")
-    Call<Usuario> alterarUsuario(@Path("id") int id, @Body Usuario usuario);
-
-    @DELETE("usuario/{id}")
-    Call<Usuario> excluirUsuario(@Path("id") int id);
-     */
 }
