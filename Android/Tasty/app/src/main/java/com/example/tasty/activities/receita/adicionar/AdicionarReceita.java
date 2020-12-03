@@ -47,8 +47,8 @@ import java.util.List;
 
 public class AdicionarReceita extends AppCompatActivity {
     List<String> listaCategoriaString;
-    List<String> ingredientes = new ArrayList<String>();
-    List<String> preparo = new ArrayList<String>();
+    List<String> listaIngredientes = new ArrayList<String>();
+    List<String> listaPreparo = new ArrayList<String>();
     List<Categoria> listaCategorias;
 
     @Override
@@ -65,9 +65,9 @@ public class AdicionarReceita extends AppCompatActivity {
         ImageButton btnAddIngredientes = findViewById(R.id.btnAddIngredientes);
         ImageButton btnAddPreparo = findViewById(R.id.btnAddPreparo);
         Button btnAddReceita = findViewById(R.id.btnAddReceita);
-        final EditText titulo = findViewById(R.id.edtAddTitulo);
-        final EditText tempo = findViewById(R.id.edtAddTempo);
-        final EditText porcao = findViewById(R.id.edtAddPorcao);
+        final EditText edtTitulo = findViewById(R.id.edtAddTitulo);
+        final EditText edtTempo = findViewById(R.id.edtAddTempo);
+        final EditText edtPorcao = findViewById(R.id.edtAddPorcao);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         carregarCategorias(spinner);
@@ -90,30 +90,37 @@ public class AdicionarReceita extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 String addIngredientes = new String();
-                for (String ingrediente : ingredientes) {
+                for (String ingrediente : listaIngredientes) {
                     addIngredientes += ingrediente + "\n\n";
                 }
                 String addPreparo = new String();
                 int i = 1;
-                for (String preparo : preparo) {
+                for (String preparo : listaPreparo) {
                     addPreparo += i + " - " + preparo + "\n\n";
                     i++;
                 }
-                if (Integer.parseInt(porcao.getText().toString()) != 0 || Integer.parseInt(tempo.getText().toString()) != 0 || !titulo.getText().toString().equals("") || !spinner.getSelectedItem().toString().equals("") || !addIngredientes.equals("") || !addPreparo.equals(""))
+
+                final String rendimento = edtPorcao.getText().toString().trim();
+                final String tempoDePreparo = edtTempo.getText().toString().trim();
+                final String titulo = edtTitulo.getText().toString().trim();
+                final Categoria categoriaSelecionada = listaCategorias.get(spinner.getSelectedItemPosition());
+                if (isCamposValidos(rendimento, tempoDePreparo, titulo, categoriaSelecionada))
                 {
                     try {
-                        Usuario usuario = new Usuario();
+                        Receita novaReceita = new Receita(Integer.parseInt(rendimento), Integer.parseInt(tempoDePreparo), titulo, addIngredientes, addPreparo);
+
                         SessionManagement session =  new SessionManagement(v.getContext());
-                        usuario = session.getSession();
-                        Receita novaReceita = new Receita(Integer.parseInt(porcao.getText().toString()), Integer.parseInt(tempo.getText().toString()), titulo.getText().toString(), listaCategorias.get(spinner.getSelectedItemPosition()), addIngredientes, addPreparo);
-                        novaReceita.setFkReceitaUsuario(usuario);
+                        int idUsuario = session.getSessionId();
+                        novaReceita.setIdUsuario(idUsuario);
+                        novaReceita.setIdCategoria(categoriaSelecionada.getId());
+
                         ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
                         Call<Receita> call = service.inserirReceita(novaReceita);
                         call.enqueue(new Callback<Receita>() {
                             @Override
                             public void onResponse(Response<Receita> response, Retrofit retrofit) {
                                 if (response.isSuccess()) {
-                                    Toast.makeText(v.getContext(), "Receita adicionada com sucesso", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(v.getContext(), "Receita adicionada com sucesso!", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                                     startActivity(intent);
                                 }
@@ -131,15 +138,33 @@ public class AdicionarReceita extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Throwable t) {
-                                Toast.makeText(v.getContext(), "Falha ao adicionar receita", Toast.LENGTH_LONG).show();
+                                Toast.makeText(v.getContext(), "Falha ao adicionar receita: "+t.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
+    }
+
+    private boolean isCamposValidos(String rendimento, String tempoDePreparo, String titulo, Categoria umaCategoria){
+        if(rendimento.equals("") || tempoDePreparo.equals("") || titulo.equals("") || umaCategoria == null){
+            Toast.makeText(getApplicationContext(), "Preencha todos os campos!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(Integer.parseInt(rendimento) < 0) {
+            Toast.makeText(getApplicationContext(), "Rendimento inválido!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        else if(Integer.parseInt(tempoDePreparo) < 0) {
+            Toast.makeText(getApplicationContext(), "Tempo de preparo inválido!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void carregarCategorias(final Spinner spinner){
@@ -192,8 +217,8 @@ public class AdicionarReceita extends AppCompatActivity {
             public void onClick(View v) {
                 if(!edtIngredientes.getText().equals("")) {
                     String str = edtIngredientes.getText().toString();
-                    ingredientes.add(str);
-                    AddIngredienteAdapter adapter = new AddIngredienteAdapter(v.getContext(),R.layout.ingrediente_item, ingredientes);
+                    listaIngredientes.add(str);
+                    AddIngredienteAdapter adapter = new AddIngredienteAdapter(v.getContext(),R.layout.ingrediente_item, listaIngredientes);
                     ExpandableHeightListView listViewIngredientes = findViewById(R.id.listViewIngredientes);
                     listViewIngredientes.setExpanded(true);
                     listViewIngredientes.setAdapter(adapter);
@@ -221,8 +246,8 @@ public class AdicionarReceita extends AppCompatActivity {
             public void onClick(View v) {
                 if (!edtPreparo.getText().equals("")) {
                     String str = edtPreparo.getText().toString();
-                    preparo.add(str);
-                    AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.preparo_item, preparo);
+                    listaPreparo.add(str);
+                    AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.preparo_item, listaPreparo);
                     ExpandableHeightListView listViewPreparo = findViewById(R.id.listViewPreparo);
                     listViewPreparo.setExpanded(true);
                     listViewPreparo.setAdapter(adapter);

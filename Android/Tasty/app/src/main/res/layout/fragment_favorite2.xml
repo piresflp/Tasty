@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF6122"
+    android:background="#e90b0a"
     tools:context=".fragments.Favorite2Fragment">
 
     <!-- TODO: Update blank fragment layout -->

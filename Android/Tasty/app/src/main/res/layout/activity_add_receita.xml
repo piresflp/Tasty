@@ -24,7 +24,7 @@
                 android:id="@+id/toolbarAdd"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#FF6122"></androidx.appcompat.widget.Toolbar>
+                android:background="#e90b0a"></androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -158,7 +158,7 @@
                     android:layout_margin="20dp"
                     android:src="@drawable/baseline_add_white_24dp"
                     android:background="@drawable/rounded_corners2"
-                    android:backgroundTint="#FF6122"/>
+                    android:backgroundTint="#e90b0a"/>
             </LinearLayout>
 
 
@@ -198,7 +198,7 @@
                     android:layout_margin="20dp"
                     android:src="@drawable/baseline_add_white_24dp"
                     android:background="@drawable/rounded_corners2"
-                    android:backgroundTint="#FF6122"/>
+                    android:backgroundTint="#e90b0a"/>
             </LinearLayout>
 
             <Button
@@ -208,7 +208,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/rounded_corners"
                 android:text="Próximo"
-                android:textColor="#FF6122"
+                android:textColor="#e90b0a"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
 

@@ -1,34 +1,32 @@
 package com.example.tasty.retrofit.models;
 
 public class Receita {
-    private int id;
+    private int id, idUsuario, idCategoria;
     private int rendimento;
     private int tempoDePreparo;
     private String titulo;
     private String ingredientes;
     private String modoDePreparo;
-    private Usuario fkReceitaUsuario;
     private Categoria fkReceitaCategoria;
+    private Usuario fkReceitaUsuario;
 
 
     public Receita() {
     }
 
-    public Receita(int rendimento, int tempoDePreparo, String titulo, Categoria categoria, String ingredientes, String modoDePreparo) throws Exception{
+    public Receita(int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo) throws Exception{
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
-        this.setCategoriaString(categoria);
         this.setIngredientes(ingredientes);
         this.setModoDePreparo(modoDePreparo);
     }
 
-    public Receita(int id, int rendimento, int tempoDePreparo, String titulo, Categoria categoria, String ingredientes, String modoDePreparo) throws Exception{
+    public Receita(int id, int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo) throws Exception{
         this.setId(id);
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
-        this.setCategoriaString(categoria);
         this.setIngredientes(ingredientes);
         this.setModoDePreparo(modoDePreparo);
     }
@@ -41,6 +39,22 @@ public class Receita {
         if(id < 0)
             throw new Exception("ID inválido!");
         this.id = id;
+    }
+
+    public int getIdUsuario() {return idUsuario;}
+
+    public void setIdUsuario(int idUsuario) throws Exception{
+        if(idUsuario < 0)
+            throw new Exception("Id de usuário inválido!");
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdCategoria() {return idCategoria;}
+
+    public void setIdCategoria(int idCategoria) throws Exception{
+        if(idCategoria < 0)
+            throw new Exception("Id de categoria inválido!");
+        this.idCategoria = idCategoria;
     }
 
     public int getRendimento() {
@@ -71,16 +85,6 @@ public class Receita {
         if(titulo == null || titulo.equals(""))
             throw new Exception("Titulo inválido");
         this.titulo = titulo;
-    }
-
-    public Categoria getCategoriaString() {
-        return this.fkReceitaCategoria;
-    }
-
-    public void setCategoriaString(Categoria categoria) throws Exception{
-        if(categoria == null || categoria.equals(""))
-            throw new Exception("Categoria inválida!");
-        this.fkReceitaCategoria = categoria;
     }
 
     public Categoria getCategoria(){return this.fkReceitaCategoria;}

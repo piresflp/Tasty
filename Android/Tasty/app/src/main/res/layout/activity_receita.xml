@@ -27,7 +27,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#FF6122"></androidx.appcompat.widget.Toolbar>
+                android:background="#e90b0a"></androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -112,7 +112,7 @@
                         android:layout_height="40dp"
                         android:layout_margin="20dp"
                         android:background="@drawable/coracao"
-                        android:backgroundTint="#FF6122"/>
+                        android:backgroundTint="#e90b0a"/>
 
                     <View
                         android:id="@+id/divider5"
@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="INGREDIENTES"
-                    android:textColor="#FF6122"
+                    android:textColor="#e90b0a"
                     android:textStyle="bold"/>
 
                 <View
@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="PREPARANDO"
-                    android:textColor="#FF6122"
+                    android:textColor="#e90b0a"
                     android:textStyle="bold"/>
 
                 <View

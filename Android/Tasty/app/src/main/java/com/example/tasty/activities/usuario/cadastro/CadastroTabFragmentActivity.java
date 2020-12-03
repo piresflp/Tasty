@@ -107,7 +107,6 @@ public class CadastroTabFragmentActivity extends Fragment {
                     }catch(Exception e){
                         Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });
