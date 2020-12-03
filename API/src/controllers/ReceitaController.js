@@ -33,7 +33,16 @@ module.exports = {
     },
 
     async consultarTodos(req, res){
-        const listaReceitas = await Receita.findAll();
+        const listaReceitas = await Receita.findAll({
+            include: [{
+                association: 'fkReceitaCategoria',
+                attributes: ['id', 'nome']
+            },
+            {
+                association: 'fkReceitaUsuario', 
+                attributes: ['id', 'nome', 'nomeDeUsuario']
+            }]
+        });
 
         if(listaReceitas.length == 0)
             return res

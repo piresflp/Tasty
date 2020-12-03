@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.receita.buscar.BuscarReceitaActivity">
+    tools:context=".activities.receita.buscar.BuscarReceitaActivity"
+    android:background="#FF6122">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReceitas"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

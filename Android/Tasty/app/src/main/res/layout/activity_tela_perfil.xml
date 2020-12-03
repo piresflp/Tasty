@@ -14,7 +14,7 @@
         android:background="#FF6122">
 
         <ImageView
-            android:id="@+id/perfil_imagem"
+            android:id="@+id/imgbPerfil"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/logo"/>

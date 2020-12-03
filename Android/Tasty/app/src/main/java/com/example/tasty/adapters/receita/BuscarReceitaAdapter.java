@@ -26,9 +26,9 @@ public class BuscarReceitaAdapter extends RecyclerView.Adapter<BuscarReceitaAdap
 
     @NonNull
     @Override
-    public ReceitaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReceitaViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View layout;
-        layout = LayoutInflater.from(mContext).inflate(R.layout.receita_fav_item, parent, false);
+        layout = LayoutInflater.from(mContext).inflate(R.layout.receita_fav_item, viewGroup, false);
 
         return new ReceitaViewHolder(layout);
     }

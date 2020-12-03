@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tasty.R;
-import com.example.tasty.activities.receita.adicionar.AdicionarReceita;
+import com.example.tasty.activities.receita.buscar.BuscarReceitaActivity;
 import com.example.tasty.activities.usuario.LoginCadastroActivity;
 import com.example.tasty.activities.usuario.visualizar.VisualizarPerfilActivity;
 import com.example.tasty.adapters.home.PageAdapter;
@@ -20,7 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     TabItem tabHome, tabTalher, tabFavorite;
-    ImageButton imgButton;
+    ImageButton imgbLupa, imgbPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         tabHome = findViewById(R.id.tabHome);
         tabTalher = findViewById(R.id.tabTalher);
         tabFavorite = findViewById(R.id.tabFavorite);
-        imgButton = findViewById(R.id.perfil_imagem);
+        imgbLupa = findViewById(R.id.imgbLupa);
+        imgbPerfil = findViewById(R.id.imgbPerfil);
         final ViewPager viewPager = findViewById(R.id.viewPager);
 
         final PageAdapter pagerAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), getApplicationContext());
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imgButton.setOnClickListener(new View.OnClickListener() {
+        imgbPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SessionManagement sessionManagement = new SessionManagement(getApplicationContext());
@@ -63,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
                     irParaOutraActivity(LoginCadastroActivity.class);
                 else
                     irParaOutraActivity(VisualizarPerfilActivity.class);
+            }
+        });
+
+        imgbLupa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irParaOutraActivity(BuscarReceitaActivity.class);
             }
         });
     }

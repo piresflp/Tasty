@@ -14,16 +14,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.receita.adicionar.AdicionarReceita"
-            android:parentActivityName=".activities.main.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.main.MainActivity"/>
+
+        <activity android:name=".activities.receita.buscar.BuscarReceitaActivity"
+            android:parentActivityName=".activities.main.MainActivity"/>
+
         <activity
             android:name=".activities.usuario.visualizar.VisualizarPerfilActivity"
-            android:parentActivityName=".activities.main.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.main.MainActivity"/>
+
         <activity android:name=".activities.usuario.LoginCadastroActivity" />
+
         <activity
             android:name=".activities.receita.visualizar.ReceitaActivity"
             android:parentActivityName=".activities.main.MainActivity" />
+        
         <activity android:name=".activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

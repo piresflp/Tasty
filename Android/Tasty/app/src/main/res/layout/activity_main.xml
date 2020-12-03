@@ -31,13 +31,14 @@
                 android:layout_centerInParent="true">
 
                 <ImageButton
+                    android:id="@+id/imgbLupa"
                     android:layout_width="35sp"
                     android:layout_height="35sp"
-                    android:background="@drawable/lupa"
-                    android:layout_marginRight="20sp"></ImageButton>
+                    android:layout_marginRight="20sp"
+                    android:background="@drawable/lupa"></ImageButton>
 
                 <ImageButton
-                    android:id="@+id/perfil_imagem"
+                    android:id="@+id/imgbPerfil"
                     android:layout_width="35sp"
                     android:layout_height="35sp"
                     android:background="@drawable/perfil_icon"
