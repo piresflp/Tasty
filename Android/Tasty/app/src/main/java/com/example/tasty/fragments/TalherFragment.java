@@ -2,23 +2,29 @@ package com.example.tasty.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.tasty.ExpandableHeightListView;
 import com.example.tasty.R;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
+import com.example.tasty.adapters.receita.CategoriaAdapter;
 import com.example.tasty.retrofit.config.RetrofitConfig;
 import com.example.tasty.retrofit.models.Categoria;
 import com.example.tasty.retrofit.services.CategoriaService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +33,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class TalherFragment extends Fragment {
-    List<Categoria> listaCategorias;
+    List<Categoria> listaCategorias = new ArrayList<Categoria>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,6 +81,12 @@ public class TalherFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_talher, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        carregarCategorias();
+    }
+
     private void carregarCategorias(){
         CategoriaService service = RetrofitConfig.createService(CategoriaService.class);
         Call<List<Categoria>> call = service.consultarTodasCategorias();
@@ -83,6 +95,10 @@ public class TalherFragment extends Fragment {
             public void onResponse(Response<List<Categoria>> response, Retrofit retrofit) {
                 if(response.isSuccess()){
                     listaCategorias = response.body();
+                    ExpandableHeightListView listView = getView().findViewById(R.id.listViewCategorias);
+                    listView.setExpanded(true);
+                    CategoriaAdapter adapter = new CategoriaAdapter(getContext(), R.layout.categoria_item, listaCategorias);
+                    listView.setAdapter(adapter);
                 }
                 else{}
                 //mostrar na tela erro ao carregar categorias

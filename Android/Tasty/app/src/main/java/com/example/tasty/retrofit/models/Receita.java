@@ -5,7 +5,6 @@ public class Receita {
     private int rendimento;
     private int tempoDePreparo;
     private String titulo;
-    private String categoria;
     private String ingredientes;
     private String modoDePreparo;
     private Usuario fkReceitaUsuario;
@@ -15,7 +14,7 @@ public class Receita {
     public Receita() {
     }
 
-    public Receita(int rendimento, int tempoDePreparo, String titulo, String categoria, String ingredientes, String modoDePreparo) throws Exception{
+    public Receita(int rendimento, int tempoDePreparo, String titulo, Categoria categoria, String ingredientes, String modoDePreparo) throws Exception{
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
@@ -24,7 +23,7 @@ public class Receita {
         this.setModoDePreparo(modoDePreparo);
     }
 
-    public Receita(int id, int rendimento, int tempoDePreparo, String titulo, String categoria, String ingredientes, String modoDePreparo) throws Exception{
+    public Receita(int id, int rendimento, int tempoDePreparo, String titulo, Categoria categoria, String ingredientes, String modoDePreparo) throws Exception{
         this.setId(id);
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
@@ -74,14 +73,14 @@ public class Receita {
         this.titulo = titulo;
     }
 
-    public String getCategoriaString() {
-        return this.categoria;
+    public Categoria getCategoriaString() {
+        return this.fkReceitaCategoria;
     }
 
-    public void setCategoriaString(String categoria) throws Exception{
+    public void setCategoriaString(Categoria categoria) throws Exception{
         if(categoria == null || categoria.equals(""))
             throw new Exception("Categoria inválida!");
-        this.categoria = categoria;
+        this.fkReceitaCategoria = categoria;
     }
 
     public Categoria getCategoria(){return this.fkReceitaCategoria;}
@@ -107,6 +106,12 @@ public class Receita {
     }
 
     public Usuario getFkReceitaUsuario() {return this.fkReceitaUsuario;}
+
+    public void setFkReceitaUsuario(Usuario fkReceitaUsuario) throws Exception{
+        if (fkReceitaUsuario ==  null)
+            throw new Exception("Usuario nulo");
+        this.fkReceitaUsuario = fkReceitaUsuario;
+    }
 
     public void setModoDePreparo(String modoDePreparo) throws Exception{
         if(modoDePreparo == null || modoDePreparo.equals(""))

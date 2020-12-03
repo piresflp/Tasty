@@ -28,13 +28,17 @@ import com.example.tasty.R;
 import com.example.tasty.activities.main.MainActivity;
 import com.example.tasty.adapters.receita.AddIngredienteAdapter;
 import com.example.tasty.adapters.receita.AddPreparoAdapter;
+import com.example.tasty.errorHandling.ErroJson;
 import com.example.tasty.retrofit.config.RetrofitConfig;
 import com.example.tasty.retrofit.models.Receita;
+import com.example.tasty.retrofit.models.Usuario;
 import com.example.tasty.retrofit.services.ReceitaService;
 
 import com.example.tasty.retrofit.config.RetrofitConfig;
 import com.example.tasty.retrofit.models.Categoria;
 import com.example.tasty.retrofit.services.CategoriaService;
+import com.example.tasty.sessionManagement.SessionManagement;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +49,7 @@ public class AdicionarReceita extends AppCompatActivity {
     List<String> listaCategoriaString;
     List<String> ingredientes = new ArrayList<String>();
     List<String> preparo = new ArrayList<String>();
+    List<Categoria> listaCategorias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +86,7 @@ public class AdicionarReceita extends AppCompatActivity {
             }
         });
 
-        /*btnAddReceita.setOnClickListener(new View.OnClickListener() {
+        btnAddReceita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 String addIngredientes = new String();
@@ -97,15 +102,31 @@ public class AdicionarReceita extends AppCompatActivity {
                 if (Integer.parseInt(porcao.getText().toString()) != 0 || Integer.parseInt(tempo.getText().toString()) != 0 || !titulo.getText().toString().equals("") || !spinner.getSelectedItem().toString().equals("") || !addIngredientes.equals("") || !addPreparo.equals(""))
                 {
                     try {
-                        Receita novaReceita = new Receita(Integer.parseInt(porcao.getText().toString()), Integer.parseInt(tempo.getText().toString()), titulo.getText().toString(), spinner.getSelectedItem().toString(), addIngredientes, addPreparo);
+                        Usuario usuario = new Usuario();
+                        SessionManagement session =  new SessionManagement(v.getContext());
+                        usuario = session.getSession();
+                        Receita novaReceita = new Receita(Integer.parseInt(porcao.getText().toString()), Integer.parseInt(tempo.getText().toString()), titulo.getText().toString(), listaCategorias.get(spinner.getSelectedItemPosition()), addIngredientes, addPreparo);
+                        novaReceita.setFkReceitaUsuario(usuario);
                         ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
                         Call<Receita> call = service.inserirReceita(novaReceita);
                         call.enqueue(new Callback<Receita>() {
                             @Override
                             public void onResponse(Response<Receita> response, Retrofit retrofit) {
-                                Toast.makeText(v.getContext(), "Receita adicionada com sucesso", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                                startActivity(intent);
+                                if (response.isSuccess()) {
+                                    Toast.makeText(v.getContext(), "Receita adicionada com sucesso", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    try {
+                                        Gson gson = new Gson();
+                                        ErroJson erro = gson.fromJson(response.errorBody().string(), ErroJson.class);
+                                        Toast.makeText(v.getContext(), erro.getError(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    catch (Exception e){
+                                        Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
                             }
 
                             @Override
@@ -118,7 +139,7 @@ public class AdicionarReceita extends AppCompatActivity {
                     }
                 }
             }
-        });*/
+        });
     }
 
     private void carregarCategorias(final Spinner spinner){
@@ -128,7 +149,7 @@ public class AdicionarReceita extends AppCompatActivity {
             @Override
             public void onResponse(Response<List<Categoria>> response, Retrofit retrofit) {
                 if(response.isSuccess()){
-                    List<Categoria> listaCategorias = response.body();
+                    listaCategorias = response.body();
 
                     for(Categoria categoria : listaCategorias)
                         listaCategoriaString.add(categoria.getNome());
