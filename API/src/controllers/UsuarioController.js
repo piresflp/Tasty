@@ -18,7 +18,15 @@ module.exports = {
             attributes: [],
             include: [{
                 association: 'fkFavoritoReceita',
-                attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento']
+                attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],
+                include: [{
+                    association: 'fkReceitaCategoria',
+                    attributes: ['id', 'nome']
+                },
+                {
+                    association: 'fkReceitaUsuario', 
+                    attributes: ['id', 'nome', 'nomeDeUsuario']
+                },]
             }]
         });
 

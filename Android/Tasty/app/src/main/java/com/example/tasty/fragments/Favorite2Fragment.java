@@ -44,6 +44,7 @@ import com.google.gson.Gson;
 public class Favorite2Fragment extends Fragment {
     TextView tvQtdReceitasFavoritas;
     List<Favorito> listaFavoritos;
+    List<Receita> listaReceitasFavoritas;
     ArrayList<Receita> receitasFavList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -117,7 +118,7 @@ public class Favorite2Fragment extends Fragment {
                         tvQtdReceitasFavoritas = view.findViewById(R.id.tvQtdReceitasFavoritas);
                         tvQtdReceitasFavoritas.setText(String.valueOf(listaFavoritos.size() + " RECEITAS FAVORITADAS"));
 
-                        List<Receita> listaReceitasFavoritas = new LinkedList<Receita>();
+                        listaReceitasFavoritas = new ArrayList<Receita>();
                         for(Favorito favorito : listaFavoritos){
                             listaReceitasFavoritas.add(favorito.getFkFavoritoReceita());
                         }
@@ -130,13 +131,12 @@ public class Favorite2Fragment extends Fragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Gson gson = new Gson();
-                                String receitaJson = gson.toJson(listaFavoritos.get(position));
+                                String receitaJson = gson.toJson(listaReceitasFavoritas.get(position));
                                 Intent intent = new Intent(getActivity(), ReceitaActivity.class);
                                 intent.putExtra("receita", receitaJson);
                                 startActivity(intent);
                             }
                         });
-
                     }
                 }
                 else{

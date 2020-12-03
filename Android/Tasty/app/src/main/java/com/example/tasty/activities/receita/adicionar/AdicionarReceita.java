@@ -81,7 +81,7 @@ public class AdicionarReceita extends AppCompatActivity {
             }
         });
 
-        btnAddReceita.setOnClickListener(new View.OnClickListener() {
+        /*btnAddReceita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 String addIngredientes = new String();
@@ -118,7 +118,7 @@ public class AdicionarReceita extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
     }
 
     private void carregarCategorias(final Spinner spinner){

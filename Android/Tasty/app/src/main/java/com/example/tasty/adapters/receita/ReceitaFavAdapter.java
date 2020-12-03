@@ -57,12 +57,12 @@ public class ReceitaFavAdapter extends ArrayAdapter<Receita> {
             view = layoutinflater.inflate(layoutResourceId,parent,false);
         }
 
-        TextView titulo = (TextView) view.findViewById(R.id.tvFavNome);
-        TextView categoria = (TextView) view.findViewById(R.id.tvFavCategoria);
+        TextView tvTitulo = (TextView) view.findViewById(R.id.tvFavNome);
+        TextView tvCategoria = (TextView) view.findViewById(R.id.tvFavCategoria);
 
         Receita receita = dados.get(position);
-        titulo.setText(receita.getTitulo());
-        categoria.setText(receita.getCategoria());
+        tvTitulo.setText(receita.getTitulo());
+        tvCategoria.setText(receita.getCategoria().getNome());
 
         return view;
     }

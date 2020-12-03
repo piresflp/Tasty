@@ -34,7 +34,6 @@ public class ReceitaActivity extends AppCompatActivity {
     Receita receita;
     TextView tvNomeReceita, tvNomeUsuarioReceita, tvPorcoes, tvTempo ,tvIngredientes, tvPreparo, tvQtdFavoritos;
     ImageButton btnFavorito;
-    Boolean isFavoritada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,7 +19,7 @@ public class Receita {
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
-        this.setCategoria(categoria);
+        this.setCategoriaString(categoria);
         this.setIngredientes(ingredientes);
         this.setModoDePreparo(modoDePreparo);
     }
@@ -29,7 +29,7 @@ public class Receita {
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
-        this.setCategoria(categoria);
+        this.setCategoriaString(categoria);
         this.setIngredientes(ingredientes);
         this.setModoDePreparo(modoDePreparo);
     }
@@ -74,14 +74,22 @@ public class Receita {
         this.titulo = titulo;
     }
 
-    public String getCategoria() {
+    public String getCategoriaString() {
         return this.categoria;
     }
 
-    public void setCategoria(String categoria) throws Exception{
+    public void setCategoriaString(String categoria) throws Exception{
         if(categoria == null || categoria.equals(""))
             throw new Exception("Categoria inválida!");
         this.categoria = categoria;
+    }
+
+    public Categoria getCategoria(){return this.fkReceitaCategoria;}
+
+    public void setCategoria(Categoria categoria) throws Exception{
+        if(categoria == null)
+            throw new Exception("Categoria inválida!");
+        this.fkReceitaCategoria = categoria;
     }
 
     public String getIngredientes() {
