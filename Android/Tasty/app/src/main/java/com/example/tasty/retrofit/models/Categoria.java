@@ -1,8 +1,11 @@
 package com.example.tasty.retrofit.models;
 
+import java.util.List;
+
 public class Categoria {
     private int id;
     private String nome;
+    private List<Receita> fkCategoriaReceita;
 
     public Categoria(int id, String nome) throws Exception{
         this.setId(id);
@@ -27,6 +30,14 @@ public class Categoria {
         if(nome == null || nome.equals(""))
             throw new Exception("Nome inválido!");
         this.nome = nome;
+    }
+
+    public List<Receita> getFkCategoriaReceita(){return this.fkCategoriaReceita;}
+
+    public void setFkCategoriaReceita(List<Receita> listaReceitas) throws Exception{
+        if(listaReceitas == null)
+            throw new Exception("Lista de receitas inválida!");
+        this.fkCategoriaReceita = listaReceitas;
     }
 
     @Override

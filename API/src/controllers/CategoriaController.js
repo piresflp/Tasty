@@ -4,11 +4,16 @@ module.exports = {
     async consultarPorID(req, res){
         const { id } = req.params;
 
-        const categoriaDesejada = await Categoria.findByPk(id, {
-            attributes: ['nome']
+        const categoriaDesejada = await Categoria.findAll({
+            where: {id: id},
+            attributes: ['nome'],
+            include: [{
+                association: 'fkCategoriaReceita',
+                as: 'listaReceitas'
+            }]
         });
 
-        if(!categoriaDesejada)
+        if(!categoriaDesejada.length > 0)
             return res
                 .status(404)
                 .json({error: 'Categoria não encontrada.'});

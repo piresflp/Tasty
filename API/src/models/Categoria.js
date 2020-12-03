@@ -10,7 +10,7 @@ class Categoria extends Model{
     }
 
     static associate(models){
-        this.hasMany(models.Receita, {foreignKey: 'id', as: 'fkCategoriaReceita'});
+        this.hasMany(models.Receita, {foreignKey: 'idCategoria', as: 'fkCategoriaReceita'});
     }
 }
 
