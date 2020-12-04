@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:padding="20dp"
-        android:background="#FF6122">
+        android:background="#DDDDDD">
 
         <ImageView
             android:id="@+id/imgbPerfil"
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#FF5722"
+            app:cardBackgroundColor="#DDDDDD"
             app:cardElevation="10dp"
             android:layout_margin="10dp">
 
@@ -90,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#FF5722"
+            app:cardBackgroundColor="#DDDDDD"
             app:cardElevation="10dp"
             android:layout_margin="10dp">
 
