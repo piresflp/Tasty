@@ -66,8 +66,8 @@ public class ReceitaActivity extends AppCompatActivity {
     private void carregarDadosReceita(){
         tvNomeUsuarioReceita.setText("Publicada por: "+receita.getFkReceitaUsuario().getNomeDeUsuario());
         tvNomeReceita.setText(receita.getTitulo());
-        tvPorcoes.setText(Integer.toString(receita.getRendimento()));
-        tvTempo.setText(Integer.toString(receita.getTempoDePreparo()));
+        tvPorcoes.setText(Integer.toString(receita.getRendimento()) + " PORÇÕES");
+        tvTempo.setText(Integer.toString(receita.getTempoDePreparo()) + " MIN");
         tvIngredientes.setText(receita.getIngredientes());
         tvPreparo.setText(receita.getModoDePreparo());
         setQtdFavoritos();

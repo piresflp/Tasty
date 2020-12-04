@@ -45,7 +45,6 @@ public class Favorite2Fragment extends Fragment {
     TextView tvQtdReceitasFavoritas;
     List<Favorito> listaFavoritos;
     List<Receita> listaReceitasFavoritas;
-    ArrayList<Receita> receitasFavList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

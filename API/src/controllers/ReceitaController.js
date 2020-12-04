@@ -2,8 +2,41 @@ const Receita = require('../models/Receita');
 const Usuario = require('../models/Usuario');
 const Categoria = require('../models/Categoria');
 const Favorito = require('../models/Favorito');
+const Sequelize = require("sequelize")
 
 module.exports = {
+    async pesquisarReceitas(req, res){
+        const input = req.body.input;
+
+        const Op = Sequelize.Op;
+        const receitasEncontradas = await Receita.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        titulo: {
+                            [Op.like]: `%`+input+`%`
+                        }
+                    },
+                    {
+                        ingredientes: {
+                            [Op.like]: `%`+input+`%`
+                        }
+                    }
+                ]
+            },
+            attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],
+            include: [{
+                association: 'fkReceitaCategoria',
+                attributes: ['id', 'nome']
+            },
+            {
+                association: 'fkReceitaUsuario', 
+                attributes: ['id', 'nome', 'nomeDeUsuario']
+            },]
+        })
+        return res.json(receitasEncontradas);
+    },
+
     async consultarQuantidadeFavoritos(req, res){
         const { id } = req.params;
 

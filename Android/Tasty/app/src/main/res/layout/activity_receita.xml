@@ -82,7 +82,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:text="Por NomeDeUsuario"
-                    android:textSize="13dp" />
+                    android:textSize="14dp" />
 
                 <View
                     android:id="@+id/divider4"
@@ -133,31 +133,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nº DE PESSOAS DE FAVORITARAM"
-                            android:textSize="14dp"
+                            android:textSize="16dp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="FAVORITARAM ESSE RECEITA"
-                            android:textSize="11dp" />
+                            android:textSize="12dp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="12dp"
                     android:background="#E8E8E8">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="65dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_marginTop="7dp"
                         android:layout_marginBottom="7dp"
                         android:text="SERVE:  "
-                        android:textSize="10dp"/>
+                        android:textSize="12dp"/>
 
                     <TextView
                         android:id="@+id/tvPorcoes"
@@ -167,7 +167,7 @@
                         android:layout_marginBottom="7dp"
                         android:text="Nº PORÇÕES"
                         android:textStyle="bold"
-                        android:textSize="10dp"/>
+                        android:textSize="12dp"/>
 
                     <View
                         android:id="@+id/divider6"
@@ -183,8 +183,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:layout_marginBottom="7dp"
-                        android:text="PREPARO:  "
-                        android:textSize="10dp"/>
+                        android:text="TEMPO DE PREPARO:  "
+                        android:textSize="12dp"/>
 
                     <TextView
                         android:id="@+id/tvTempo"
@@ -194,7 +194,7 @@
                         android:layout_marginBottom="7dp"
                         android:text="Nº MIN"
                         android:textStyle="bold"
-                        android:textSize="10dp"/>
+                        android:textSize="12dp"/>
                 </LinearLayout>
 
             </LinearLayout>

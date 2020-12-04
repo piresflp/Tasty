@@ -16,7 +16,7 @@
             android:name=".activities.receita.adicionar.AdicionarReceita"
             android:parentActivityName=".activities.main.MainActivity"/>
 
-        <activity android:name=".activities.receita.buscar.BuscarReceitaActivity"
+        <activity android:name=".activities.receita.pesquisar.PesquisarReceitaActivity"
             android:parentActivityName=".activities.main.MainActivity"/>
 
         <activity

@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.receita.buscar.BuscarReceitaActivity"
-    android:background="@color/cardview_light_background">
+    tools:context=".activities.receita.pesquisar.PesquisarReceitaActivity"
+    android:background="#e90b0a">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvReceitas"
+    <ListView
+        android:id="@+id/lvReceitas"
         android:layout_width="409dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
@@ -21,6 +21,7 @@
 
     <EditText
         android:id="@+id/edtPesquisa"
+        android:imeOptions="actionSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawablePadding="8dp"
@@ -31,7 +32,7 @@
         android:drawableLeft="@drawable/ic_baseline_search_24"
         android:ems="10"
         android:hint="Pesquise por título ou ingrediente."
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

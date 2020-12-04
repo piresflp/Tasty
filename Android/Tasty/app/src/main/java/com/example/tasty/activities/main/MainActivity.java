@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tasty.R;
-import com.example.tasty.activities.receita.buscar.BuscarReceitaActivity;
+import com.example.tasty.activities.receita.pesquisar.PesquisarReceitaActivity;
 import com.example.tasty.activities.usuario.LoginCadastroActivity;
 import com.example.tasty.activities.usuario.visualizar.VisualizarPerfilActivity;
 import com.example.tasty.adapters.home.PageAdapter;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         imgbLupa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                irParaOutraActivity(BuscarReceitaActivity.class);
+                irParaOutraActivity(PesquisarReceitaActivity.class);
             }
         });
     }
