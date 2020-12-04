@@ -10,6 +10,7 @@ class Receita extends Model{
             rendimento: DataTypes.INTEGER,
             idUsuario: DataTypes.INTEGER,
             idCategoria: DataTypes.INTEGER,
+            img: DataTypes.STRING,
         }, {
             sequelize,
             tableName: 'Receitas'
