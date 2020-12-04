@@ -1,5 +1,6 @@
 package com.example.tasty.activities.receita.adicionar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,7 +8,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +45,7 @@ import com.example.tasty.retrofit.services.CategoriaService;
 import com.example.tasty.sessionManagement.SessionManagement;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +56,10 @@ public class AdicionarReceita extends AppCompatActivity {
     List<String> listaIngredientes = new ArrayList<String>();
     List<String> listaPreparo = new ArrayList<String>();
     List<Categoria> listaCategorias;
+
+    int rec = 1;
+    Bitmap bitmap;
+    String imagemTransformada = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +114,9 @@ public class AdicionarReceita extends AppCompatActivity {
                 final String tempoDePreparo = edtTempo.getText().toString().trim();
                 final String titulo = edtTitulo.getText().toString().trim();
                 final Categoria categoriaSelecionada = listaCategorias.get(spinner.getSelectedItemPosition());
+
+                openDialogImagem();
+
                 if (isCamposValidos(rendimento, tempoDePreparo, titulo, categoriaSelecionada))
                 {
                     try {
@@ -255,5 +268,35 @@ public class AdicionarReceita extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void openDialogImagem(){
+        Intent galeria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galeria, rec);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == rec && requestCode == RESULT_OK)
+        {
+            Uri uri = data.getData();
+            try
+            {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                transformar(bitmap);
+            }
+            catch(Exception e){}
+        }
+    }
+
+    public void transformar(Bitmap bitmap)
+    {
+        ByteArrayOutputStream baite = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baite);
+
+        byte[] vetorDeByte = baite.toByteArray();
+
+        imagemTransformada = Base64.encodeToString(vetorDeByte, Base64.DEFAULT);
     }
 }
