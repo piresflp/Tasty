@@ -3,6 +3,7 @@ package com.example.tasty.activities.receita.visualizar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,7 +32,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class ReceitaActivity extends AppCompatActivity {
     int idUsuario;
-    Receita receita;
     TextView tvNomeReceita, tvNomeUsuarioReceita, tvPorcoes, tvTempo ,tvIngredientes, tvPreparo, tvQtdFavoritos;
     ImageButton btnFavorito;
 
@@ -57,37 +57,60 @@ public class ReceitaActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String receitaJson = intent.getStringExtra("receita");
-        Gson gson = new Gson();
-        receita = gson.fromJson(receitaJson, Receita.class);
-        carregarDadosReceita();
+        int idReceita = intent.getIntExtra("receita", -1);
+        ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
+        Call<Receita> call = service.consultarReceitaPorID(idReceita);
+        call.enqueue(new Callback<Receita>() {
+            @Override
+            public void onResponse(Response<Receita> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    Receita receita = response.body();
+                    carregarDadosReceita(receita);
+                }
+                else {
+                    try {
+                        Gson gson = new Gson();
+                        ErroJson erro = gson.fromJson(response.errorBody().string(), ErroJson.class);
+                        Toast.makeText(getContext(), erro.getError(), Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getApplicationContext(), "Erro: "+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-    private void carregarDadosReceita(){
+    private void carregarDadosReceita(Receita receita){
         tvNomeUsuarioReceita.setText("Publicada por: "+receita.getFkReceitaUsuario().getNomeDeUsuario());
         tvNomeReceita.setText(receita.getTitulo());
         tvPorcoes.setText(Integer.toString(receita.getRendimento()) + " PORÇÕES");
         tvTempo.setText(Integer.toString(receita.getTempoDePreparo()) + " MIN");
         tvIngredientes.setText(receita.getIngredientes());
         tvPreparo.setText(receita.getModoDePreparo());
-        setQtdFavoritos();
-        verificarBotaoFavorito();
+        setQtdFavoritos(receita);
+        //verificarBotaoFavorito(receita);
     }
 
-    private void verificarBotaoFavorito(){
+    private void verificarBotaoFavorito(Receita receita){
         UsuarioService service = RetrofitConfig.createService(UsuarioService.class);
         Call<String> call = service.verificarFavorito(idUsuario, receita.getId());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
-                if (response.body().equals("0"))
+                if (response.body().equals("0")){}
                     // receita não está favoritada
                     // FALTA SETAR ANIMACAO BOTAO
-                    btnFavorito.setOnClickListener(adicionarFavorito);
-                else
+                    //btnFavorito.setOnClickListener(adicionarFavorito);
+                else{}
                     // receita favoritada
                     // FALTA SETAR ANIMACAO BOTAO
-                    btnFavorito.setOnClickListener(removerFavorito);
+                    //btnFavorito.setOnClickListener(removerFavorito);
             }
 
             @Override
@@ -97,7 +120,7 @@ public class ReceitaActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener removerFavorito = new View.OnClickListener() {
+    /*private View.OnClickListener removerFavorito = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             FavoritoService service = RetrofitConfig.createService(FavoritoService.class);
@@ -167,9 +190,9 @@ public class ReceitaActivity extends AppCompatActivity {
             }
 
         }
-    };
+    };*/
 
-    private void setQtdFavoritos(){
+    private void setQtdFavoritos(Receita receita){
         int idReceita = receita.getId();
         ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
         Call<String> call = service.consultarQuantidadeFavoritos(idReceita);
@@ -185,6 +208,10 @@ public class ReceitaActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public Context getContext(){
+        return (Context)this;
     }
 
 }

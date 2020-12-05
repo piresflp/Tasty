@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -160,6 +161,13 @@ public class AdicionarReceita extends AppCompatActivity {
                 }
             }
         });
+        ExpandableHeightListView listViewIngredientes = findViewById(R.id.listViewIngredientes);
+        listViewIngredientes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openDialogEditIngredientes(position);
+            }
+        });
     }
 
     private boolean isCamposValidos(String rendimento, String tempoDePreparo, String titulo, Categoria umaCategoria){
@@ -241,6 +249,38 @@ public class AdicionarReceita extends AppCompatActivity {
         });
     }
 
+    private void openDialogEditIngredientes(final int position){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_edit_ingredientes);
+        final EditText edtEditIngredientes = dialog.findViewById(R.id.edtEditIngredientes);
+        edtEditIngredientes.setText(listaIngredientes.get(position));
+        dialog.show();
+        Button btnDeletarIngredientes = dialog.findViewById(R.id.btnDeletarIngredientes);
+        btnDeletarIngredientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaIngredientes.remove(position);
+                AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.ingrediente_item, listaIngredientes);
+                ExpandableHeightListView listViewIngredientes = findViewById(R.id.listViewIngredientes);
+                listViewIngredientes.setExpanded(true);
+                listViewIngredientes.setAdapter(adapter);
+                dialog.cancel();
+            }
+        });
+        Button btnEditarIngredientes = dialog.findViewById(R.id.btnEditarIngredientes);
+        btnEditarIngredientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaIngredientes.set(position, edtEditIngredientes.getText().toString());
+                AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.ingrediente_item, listaIngredientes);
+                ExpandableHeightListView listViewIngredientes = findViewById(R.id.listViewIngredientes);
+                listViewIngredientes.setExpanded(true);
+                listViewIngredientes.setAdapter(adapter);
+                dialog.cancel();
+            }
+        });
+    }
+
     private void openDialogPreparo() {
         final Dialog dialog = new Dialog(this); // Context, this, etc.
         dialog.setContentView(R.layout.dialog_preparo);
@@ -266,6 +306,38 @@ public class AdicionarReceita extends AppCompatActivity {
                     listViewPreparo.setAdapter(adapter);
                     dialog.cancel();
                 }
+            }
+        });
+    }
+
+    private void openDialogEditPreparo(final int position){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_edit_preparo);
+        final EditText edtEditPreparo = dialog.findViewById(R.id.edtEditPreparo);
+        edtEditPreparo.setText(listaPreparo.get(position));
+        dialog.show();
+        Button btnDeletarPreparo = dialog.findViewById(R.id.btnDeletarPreparo);
+        btnDeletarPreparo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaPreparo.remove(position);
+                AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.preparo_item, listaPreparo);
+                ExpandableHeightListView listViewPreparo = findViewById(R.id.listViewPreparo);
+                listViewPreparo.setExpanded(true);
+                listViewPreparo.setAdapter(adapter);
+                dialog.cancel();
+            }
+        });
+        Button btnEditarPreparo = dialog.findViewById(R.id.btnEditarPreparo);
+        btnEditarPreparo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaPreparo.set(position, edtEditPreparo.getText().toString());
+                AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.preparo_item, listaPreparo);
+                ExpandableHeightListView listViewPreparo = findViewById(R.id.listViewPreparo);
+                listViewPreparo.setExpanded(true);
+                listViewPreparo.setAdapter(adapter);
+                dialog.cancel();
             }
         });
     }

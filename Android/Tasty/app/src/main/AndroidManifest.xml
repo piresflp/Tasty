@@ -13,23 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.receita.visualizar.ReceitaCategoria"
+            android:parentActivityName=".activities.main.MainActivity"></activity>
         <activity
             android:name=".activities.receita.adicionar.AdicionarReceita"
-            android:parentActivityName=".activities.main.MainActivity"/>
-
-        <activity android:name=".activities.receita.buscar.BuscarReceitaActivity"
-            android:parentActivityName=".activities.main.MainActivity"/>
-
+            android:parentActivityName=".activities.main.MainActivity" />
+        <activity
+            android:name=".activities.receita.pesquisar.PesquisarReceitaActivity"
+            android:parentActivityName=".activities.main.MainActivity" />
         <activity
             android:name=".activities.usuario.visualizar.VisualizarPerfilActivity"
-            android:parentActivityName=".activities.main.MainActivity"/>
-
+            android:parentActivityName=".activities.main.MainActivity" />
         <activity android:name=".activities.usuario.LoginCadastroActivity" />
-
         <activity
             android:name=".activities.receita.visualizar.ReceitaActivity"
             android:parentActivityName=".activities.main.MainActivity" />
-        
         <activity android:name=".activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

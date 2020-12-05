@@ -18,7 +18,7 @@ module.exports = {
                 .status(404)
                 .json({error: 'Categoria não encontrada.'});
 
-        return res.json(categoriaDesejada);
+        return res.json(categoriaDesejada[0]);
     },  
 
     async consultarTodos(req, res){

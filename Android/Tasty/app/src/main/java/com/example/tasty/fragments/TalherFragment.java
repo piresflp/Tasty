@@ -1,5 +1,6 @@
 package com.example.tasty.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,10 +21,13 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
+import com.example.tasty.activities.receita.visualizar.ReceitaActivity;
+import com.example.tasty.activities.receita.visualizar.ReceitaCategoria;
 import com.example.tasty.adapters.receita.CategoriaAdapter;
 import com.example.tasty.retrofit.config.RetrofitConfig;
 import com.example.tasty.retrofit.models.Categoria;
 import com.example.tasty.retrofit.services.CategoriaService;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +104,14 @@ public class TalherFragment extends Fragment {
                     listView.setExpanded(true);
                     CategoriaAdapter adapter = new CategoriaAdapter(getContext(), R.layout.categoria_item, listaCategorias);
                     listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getActivity(), ReceitaCategoria.class);
+                            intent.putExtra("idCategoria", listaCategorias.get(position).getId());
+                            startActivity(intent);
+                        }
+                    });
                 }
                 else{}
                 //mostrar na tela erro ao carregar categorias
