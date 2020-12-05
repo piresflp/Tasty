@@ -9,17 +9,19 @@ public class Receita {
     private String modoDePreparo;
     private Categoria fkReceitaCategoria;
     private Usuario fkReceitaUsuario;
+    private String img;
 
 
     public Receita() {
     }
 
-    public Receita(int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo) throws Exception{
+    public Receita(int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo, String img) throws Exception{
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
         this.setIngredientes(ingredientes);
         this.setModoDePreparo(modoDePreparo);
+        this.setImg(img);
     }
 
     public Receita(int id, int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo) throws Exception{
@@ -113,14 +115,24 @@ public class Receita {
 
     public void setFkReceitaUsuario(Usuario fkReceitaUsuario) throws Exception{
         if (fkReceitaUsuario ==  null)
-            throw new Exception("Usuario nulo");
+            throw new Exception("Usuario nulo!");
         this.fkReceitaUsuario = fkReceitaUsuario;
     }
 
     public void setModoDePreparo(String modoDePreparo) throws Exception{
         if(modoDePreparo == null || modoDePreparo.equals(""))
-            throw new Exception("Modo de preparo inválido");
+            throw new Exception("Modo de preparo inválido!");
         this.modoDePreparo = modoDePreparo;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img)throws Exception {
+        if(img == null)
+            throw new Exception("Imagem nula!");
+        this.img = img;
     }
 
     public String toString(){

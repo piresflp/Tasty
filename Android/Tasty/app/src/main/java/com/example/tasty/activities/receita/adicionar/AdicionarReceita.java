@@ -5,11 +5,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -79,6 +82,7 @@ public class AdicionarReceita extends AppCompatActivity {
         final EditText edtTitulo = findViewById(R.id.edtAddTitulo);
         final EditText edtTempo = findViewById(R.id.edtAddTempo);
         final EditText edtPorcao = findViewById(R.id.edtAddPorcao);
+        final ImageButton btnAddImagem = findViewById(R.id.btnAddImage);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         carregarCategorias(spinner);
@@ -116,17 +120,16 @@ public class AdicionarReceita extends AppCompatActivity {
                 final String titulo = edtTitulo.getText().toString().trim();
                 final Categoria categoriaSelecionada = listaCategorias.get(spinner.getSelectedItemPosition());
 
-                openDialogImagem();
-
                 if (isCamposValidos(rendimento, tempoDePreparo, titulo, categoriaSelecionada))
                 {
                     try {
-                        Receita novaReceita = new Receita(Integer.parseInt(rendimento), Integer.parseInt(tempoDePreparo), titulo, addIngredientes, addPreparo);
+                        Receita novaReceita = new Receita(Integer.parseInt(rendimento), Integer.parseInt(tempoDePreparo), titulo, addIngredientes, addPreparo, imagemTransformada);
 
                         SessionManagement session =  new SessionManagement(v.getContext());
                         int idUsuario = session.getSessionId();
                         novaReceita.setIdUsuario(idUsuario);
                         novaReceita.setIdCategoria(categoriaSelecionada.getId());
+
 
                         ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
                         Call<Receita> call = service.inserirReceita(novaReceita);
@@ -168,6 +171,14 @@ public class AdicionarReceita extends AppCompatActivity {
                 openDialogEditIngredientes(position);
             }
         });
+
+        btnAddImagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialogImagem();
+            }
+        });
+
     }
 
     private boolean isCamposValidos(String rendimento, String tempoDePreparo, String titulo, Categoria umaCategoria){
@@ -342,8 +353,9 @@ public class AdicionarReceita extends AppCompatActivity {
         });
     }
 
-    public void openDialogImagem(){
-        Intent galeria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    private void openDialogImagem(){
+        Intent galeria = new Intent(Intent.ACTION_PICK);
+        galeria.setType("image/*");
         startActivityForResult(galeria, rec);
     }
 
