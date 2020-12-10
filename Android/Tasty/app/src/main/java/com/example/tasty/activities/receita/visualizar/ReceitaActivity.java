@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,7 @@ public class ReceitaActivity extends AppCompatActivity {
     int idUsuario;
     TextView tvNomeReceita, tvNomeUsuarioReceita, tvPorcoes, tvTempo ,tvIngredientes, tvPreparo, tvQtdFavoritos;
     ImageButton btnFavorito;
+    int idReceita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class ReceitaActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        int idReceita = intent.getIntExtra("receita", -1);
+        idReceita = intent.getIntExtra("receita", -1);
         ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
         Call<Receita> call = service.consultarReceitaPorID(idReceita);
         call.enqueue(new Callback<Receita>() {
@@ -94,23 +96,25 @@ public class ReceitaActivity extends AppCompatActivity {
         tvIngredientes.setText(receita.getIngredientes());
         tvPreparo.setText(receita.getModoDePreparo());
         setQtdFavoritos(receita);
-        //verificarBotaoFavorito(receita);
+        verificarBotaoFavorito(receita);
     }
 
     private void verificarBotaoFavorito(Receita receita){
         UsuarioService service = RetrofitConfig.createService(UsuarioService.class);
-        Call<String> call = service.verificarFavorito(idUsuario, receita.getId());
+        Call<String> call = service.verificarFavorito(idUsuario, idReceita);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
-                if (response.body().equals("0")){}
+                if (response.body().equals("0")) {
                     // receita não está favoritada
-                    // FALTA SETAR ANIMACAO BOTAO
-                    //btnFavorito.setOnClickListener(adicionarFavorito);
-                else{}
+                    btnFavorito.setBackground(getResources().getDrawable(R.drawable.baseline_favorite_border_black_24dp));
+                    btnFavorito.setOnClickListener(adicionarFavorito);
+                }
+                else{
                     // receita favoritada
-                    // FALTA SETAR ANIMACAO BOTAO
-                    //btnFavorito.setOnClickListener(removerFavorito);
+                    btnFavorito.setBackground(getResources().getDrawable(R.drawable.coracao));
+                    btnFavorito.setOnClickListener(removerFavorito);
+                }
             }
 
             @Override
@@ -120,16 +124,17 @@ public class ReceitaActivity extends AppCompatActivity {
         });
     }
 
-    /*private View.OnClickListener removerFavorito = new View.OnClickListener() {
+    private View.OnClickListener removerFavorito = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             FavoritoService service = RetrofitConfig.createService(FavoritoService.class);
-            Call<Favorito> call = service.removerFavorito(idUsuario, receita.getId());
+            Call<Favorito> call = service.removerFavorito(idUsuario, idReceita);
             call.enqueue(new Callback<Favorito>() {
                 @Override
                 public void onResponse(Response<Favorito> response, Retrofit retrofit) {
                     if(response.isSuccess()){
-                        // trocar animação botão
+                        tvQtdFavoritos.setText(String.valueOf(Integer.parseInt(tvQtdFavoritos.getText().toString())-1));
+                        btnFavorito.setBackground(getResources().getDrawable(R.drawable.baseline_favorite_border_black_24dp));
                         btnFavorito.setOnClickListener(adicionarFavorito);
                     }
                     else {
@@ -156,7 +161,7 @@ public class ReceitaActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             try {
-                Favorito novoFavorito = new Favorito(idUsuario, receita.getId());
+                Favorito novoFavorito = new Favorito(idUsuario, idReceita);
 
                 FavoritoService service = RetrofitConfig.createService(FavoritoService.class);
                 Call<Favorito> call = service.inserirFavorito(novoFavorito);
@@ -164,7 +169,8 @@ public class ReceitaActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Response<Favorito> response, Retrofit retrofit) {
                         if(response.isSuccess()) {
-                            // trocar animação botao
+                            tvQtdFavoritos.setText(String.valueOf(Integer.parseInt(tvQtdFavoritos.getText().toString())+1));
+                            btnFavorito.setBackground(getResources().getDrawable(R.drawable.coracao));
                             btnFavorito.setOnClickListener(removerFavorito);
                         }
                         else {
@@ -190,7 +196,7 @@ public class ReceitaActivity extends AppCompatActivity {
             }
 
         }
-    };*/
+    };
 
     private void setQtdFavoritos(Receita receita){
         int idReceita = receita.getId();

@@ -35,5 +35,5 @@ module.exports = {
 
         return res
             .json({message: 'Favorito deletado com sucesso!'});
-    },
+    } 
 };

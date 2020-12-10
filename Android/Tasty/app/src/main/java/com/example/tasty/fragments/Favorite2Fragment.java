@@ -129,10 +129,8 @@ public class Favorite2Fragment extends Fragment {
                         listViewReceita.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Gson gson = new Gson();
-                                String receitaJson = gson.toJson(listaReceitasFavoritas.get(position));
                                 Intent intent = new Intent(getActivity(), ReceitaActivity.class);
-                                intent.putExtra("receita", receitaJson);
+                                intent.putExtra("receita", listaReceitasFavoritas.get(position).getId());
                                 startActivity(intent);
                             }
                         });

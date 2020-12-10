@@ -9,19 +9,19 @@ public class Receita {
     private String modoDePreparo;
     private Categoria fkReceitaCategoria;
     private Usuario fkReceitaUsuario;
-    private String img;
+    //private byte[] img;
 
 
     public Receita() {
     }
 
-    public Receita(int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo, String img) throws Exception{
+    public Receita(int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo) throws Exception{
         this.setRendimento(rendimento);
         this.setTempoDePreparo(tempoDePreparo);
         this.setTitulo(titulo);
         this.setIngredientes(ingredientes);
         this.setModoDePreparo(modoDePreparo);
-        this.setImg(img);
+        //this.setImg(img);
     }
 
     public Receita(int id, int rendimento, int tempoDePreparo, String titulo, String ingredientes, String modoDePreparo) throws Exception{
@@ -125,15 +125,15 @@ public class Receita {
         this.modoDePreparo = modoDePreparo;
     }
 
-    public String getImg() {
+    /*public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img)throws Exception {
+    public void setImg(byte[] img)throws Exception {
         if(img == null)
             throw new Exception("Imagem nula!");
         this.img = img;
-    }
+    }*/
 
     public String toString(){
         return "Id: "+this.id+"; Titulo: "+this.titulo+"; Usuario: "+this.fkReceitaUsuario.toString()+"; Categoria: "+this.fkReceitaCategoria.toString();

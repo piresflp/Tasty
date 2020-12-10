@@ -25,6 +25,9 @@ public interface ReceitaService {
     @GET("receita/{id}")
     Call<Receita> consultarReceitaPorID(@Path("id") int id);
 
+    @GET("home")
+    Call<List<Receita>> consultarReceitasHome();
+
     @POST("receita")
     Call<Receita> inserirReceita(@Body Receita receita);
 }

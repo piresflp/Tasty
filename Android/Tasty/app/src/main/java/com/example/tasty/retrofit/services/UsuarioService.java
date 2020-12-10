@@ -26,6 +26,9 @@ public interface UsuarioService {
     @GET("usuario/{id}")
     Call<List<Favorito>> consultarReceitasFavoritas(@Path("id") int id);
 
+    @GET("usuario/receitas/{id}")
+    Call<List<Receita>> consultarReceitasPorId(@Path("id") int id);
+
     @POST("usuario")
     Call<Usuario> inserirUsuario(@Body Usuario usuario);
 

@@ -17,125 +17,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/receitaHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:background="@android:drawable/progress_indeterminate_horizontal"
-                    android:layout_margin="10dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CARNES"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BURACO DE CARNE MOÍDA"
-                    android:textSize="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:background="@android:drawable/progress_indeterminate_horizontal"
-                    android:layout_margin="10dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="center_horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DOCES E SOBREMESAS"
-                        android:layout_gravity="center" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TORTA DE ABACAXI"
-                    android:textSize="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:background="@android:drawable/progress_indeterminate_horizontal"
-                    android:layout_margin="10dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="center_horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SALADAS, MOLHOS E ACOMPANHAMENTOS"
-                        android:layout_gravity="center" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ARROZ DE BRÓCOLIS"
-                    android:textSize="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"/>
-
-            </LinearLayout>
+            <com.example.tasty.ExpandableHeightListView
+                android:id="@+id/listViewHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:fadingEdge="none"
+                android:focusable="false"
+                android:scrollbars="none"/>
 
         </LinearLayout>
 

@@ -2,8 +2,41 @@ const Receita = require('../models/Receita');
 const Usuario = require('../models/Usuario');
 const Categoria = require('../models/Categoria');
 const Favorito = require('../models/Favorito');
+const Sequelize = require("sequelize")
 
 module.exports = {
+    async pesquisarReceitas(req, res){	
+        const input = req.body.input;	
+
+        const Op = Sequelize.Op;	
+        const receitasEncontradas = await Receita.findAll({	
+            where: {	
+                [Op.or]: [	
+                    {	
+                        titulo: {	
+                            [Op.like]: `%`+input+`%`	
+                        }	
+                    },	
+                    {	
+                        ingredientes: {	
+                            [Op.like]: `%`+input+`%`	
+                        }	
+                    }	
+                ]	
+            },	
+            attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],	
+            include: [{	
+                association: 'fkReceitaCategoria',	
+                attributes: ['id', 'nome']	
+            },	
+            {	
+                association: 'fkReceitaUsuario', 	
+                attributes: ['id', 'nome', 'nomeDeUsuario']	
+            },]	
+        })	
+        return res.json(receitasEncontradas);	
+    },
+
     async consultarQuantidadeFavoritos(req, res){
         const { id } = req.params;
 
@@ -65,7 +98,7 @@ module.exports = {
                 .status(400)
                 .json({error: 'Categoria não encontrada!'});
 
-        const { id, titulo, ingredientes, modoDePreparo, tempoDePreparo, rendimento, fkIdUsuario, fkIdCategoria, img } = await Receita.create(req.body);
+        const { id, titulo, ingredientes, modoDePreparo, tempoDePreparo, rendimento, fkIdUsuario, fkIdCategoria } = await Receita.create(req.body);
         return res.json({
             id,
             titulo,
@@ -75,7 +108,7 @@ module.exports = {
             rendimento,
             fkIdUsuario,
             fkIdCategoria,
-            img,
+            //img,
         })
     },
 
@@ -115,5 +148,48 @@ module.exports = {
         await receitaDesejada.destroy();
         return res
             .json({message: 'Receita deletada com sucesso!'});
+    },
+
+    async buscarReceitasHome(req, res){
+        const qtdReceitas = await Receita.count();
+        idReceita1 = Math.floor(Math.random()*qtdReceitas +1);
+        idReceita2 = Math.floor(Math.random()*qtdReceitas +1);
+        idReceita3 = Math.floor(Math.random()*qtdReceitas +1);
+        receita1 = await Receita.findByPk(idReceita1, {
+            attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],	
+            include: [{	
+                association: 'fkReceitaCategoria',	
+                attributes: ['id', 'nome']	
+            },	
+            {	
+                association: 'fkReceitaUsuario', 	
+                attributes: ['id', 'nome', 'nomeDeUsuario']	
+            },]	
+        });
+        receita2 = await Receita.findByPk(idReceita2, {
+            attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],	
+            include: [{	
+                association: 'fkReceitaCategoria',	
+                attributes: ['id', 'nome']	
+            },	
+            {	
+                association: 'fkReceitaUsuario', 	
+                attributes: ['id', 'nome', 'nomeDeUsuario']	
+            },]	
+        });
+        receita3 = await Receita.findByPk(idReceita3, {
+            attributes: ['id', 'idUsuario', 'idCategoria', 'titulo', 'ingredientes', 'modoDePreparo', 'tempoDePreparo', 'rendimento'],	
+            include: [{	
+                association: 'fkReceitaCategoria',	
+                attributes: ['id', 'nome']	
+            },	
+            {	
+                association: 'fkReceitaUsuario', 	
+                attributes: ['id', 'nome', 'nomeDeUsuario']	
+            },]	
+        });
+
+        const listaReceitas = [receita1, receita2, receita3];
+        return res.json(listaReceitas);
     }
 };

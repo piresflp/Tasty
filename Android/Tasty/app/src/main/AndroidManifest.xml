@@ -13,8 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.receita.visualizar.ReceitaCategoria"
-            android:parentActivityName=".activities.main.MainActivity"></activity>
+        <activity android:name=".activities.receita.visualizar.ReceitasUsuario"
+            android:parentActivityName=".activities.main.MainActivity">
+        </activity>
+        <activity
+            android:name=".activities.receita.visualizar.ReceitaCategoria"
+            android:parentActivityName=".activities.main.MainActivity" />
         <activity
             android:name=".activities.receita.adicionar.AdicionarReceita"
             android:parentActivityName=".activities.main.MainActivity" />

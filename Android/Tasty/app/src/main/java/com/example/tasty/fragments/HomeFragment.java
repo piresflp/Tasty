@@ -10,14 +10,35 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.tasty.ExpandableHeightListView;
 import com.example.tasty.activities.receita.adicionar.AdicionarReceita;
 import com.example.tasty.R;
 import com.example.tasty.activities.receita.visualizar.ReceitaActivity;
+import com.example.tasty.activities.receita.visualizar.ReceitaCategoria;
 import com.example.tasty.activities.usuario.LoginCadastroActivity;
+import com.example.tasty.adapters.receita.CategoriaAdapter;
+import com.example.tasty.adapters.receita.ReceitaHomeAdapter;
+import com.example.tasty.errorHandling.ErroJson;
+import com.example.tasty.retrofit.config.RetrofitConfig;
+import com.example.tasty.retrofit.models.Categoria;
+import com.example.tasty.retrofit.models.Receita;
+import com.example.tasty.retrofit.services.CategoriaService;
+import com.example.tasty.retrofit.services.ReceitaService;
 import com.example.tasty.sessionManagement.SessionManagement;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +46,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    List<Receita> listaReceitas = new ArrayList<Receita>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,9 +98,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        LinearLayout receitaHome = view.findViewById(R.id.receitaHome);
         FloatingActionButton button = view.findViewById(R.id.floatingActionButton);
-        //receitasFavList = new ArrayList<>();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +111,45 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        carregarReceitas();
+    }
 
-        receitaHome.setOnClickListener(new View.OnClickListener() {
+    private void carregarReceitas(){
+        ReceitaService service = RetrofitConfig.createService(ReceitaService.class);
+        Call<List<Receita>> call = service.consultarReceitasHome();
+        call.enqueue(new Callback<List<Receita>>() {
             @Override
-            public void onClick(View view) {
-                irParaOutraActivity(ReceitaActivity.class);
+            public void onResponse(Response<List<Receita>> response, Retrofit retrofit) {
+                if(response.isSuccess()){
+                    listaReceitas = response.body();
+                    ExpandableHeightListView listView = getView().findViewById(R.id.listViewHome);
+                    listView.setExpanded(true);
+                    ReceitaHomeAdapter adapter = new ReceitaHomeAdapter(getContext(), R.layout.receita_home_item, listaReceitas);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getActivity(), ReceitaActivity.class);
+                            intent.putExtra("receita", listaReceitas.get(position).getId());
+                            startActivity(intent);
+                        }
+                    });
+                }
+                else{
+                    try{
+                        Gson gson = new Gson();
+                        ErroJson erro = gson.fromJson(response.errorBody().string(), ErroJson.class);
+                        Toast.makeText(getContext(), erro.getError(), Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

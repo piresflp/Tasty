@@ -84,10 +84,9 @@ public class PesquisarReceitaActivity extends AppCompatActivity {
                             lvReceitasEncontradas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Gson gson = new Gson();
-                                    String receitaJson = gson.toJson(listaReceitas.get(position));
+
                                     Intent intent = new Intent(PesquisarReceitaActivity.this, ReceitaActivity.class);
-                                    intent.putExtra("receita", receitaJson);
+                                    intent.putExtra("receita", listaReceitas.get(position).getId());
                                     startActivity(intent);
                                 }
                             });

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import retrofit.Retrofit;
 
 import com.example.tasty.R;
 import com.example.tasty.activities.main.MainActivity;
+import com.example.tasty.activities.receita.visualizar.ReceitasUsuario;
 import com.example.tasty.errorHandling.ErroJson;
 import com.example.tasty.retrofit.config.RetrofitConfig;
 import com.example.tasty.retrofit.models.DadosPerfilUsuario;
@@ -43,10 +45,11 @@ public class VisualizarPerfilActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         tvQtdReceitas = findViewById(R.id.qtsReceitas);
         tvQtdFavoritos = findViewById(R.id.qtsFavoritos);
+        RelativeLayout relativeLayout = findViewById(R.id.relativeUsuarioReceitas);
 
         Gson gson = new Gson();
         SessionManagement sessionManagement = new SessionManagement(getApplicationContext());
-        Usuario usuarioLogado = sessionManagement.getSession();
+        final Usuario usuarioLogado = sessionManagement.getSession();
 
         carregarDadosUsuario(usuarioLogado);
         carregarReceitasRelacionadas(usuarioLogado.getId());
@@ -60,6 +63,15 @@ public class VisualizarPerfilActivity extends AppCompatActivity {
 
                 Intent intentOutraActivity = new Intent(VisualizarPerfilActivity.this, MainActivity.class);
                 startActivity(intentOutraActivity);
+            }
+        });
+
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReceitasUsuario.class);
+                intent.putExtra("idUsuario", usuarioLogado.getId());
+                startActivity(intent);
             }
         });
     }

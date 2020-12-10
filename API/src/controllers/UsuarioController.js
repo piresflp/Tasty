@@ -148,5 +148,21 @@ module.exports = {
                 nomeDeUsuario
             });
         });
+    },
+
+    async buscarReceitasPorIdUsuario(req, res){
+        const {id} = req.params;
+        const receitasUsuario = await Receita.findAll({
+            where:{idUsuario:id},
+            include: [{	
+                association: 'fkReceitaCategoria',	
+                attributes: ['id', 'nome']	
+            },	
+            {	
+                association: 'fkReceitaUsuario', 	
+                attributes: ['id', 'nome', 'nomeDeUsuario']	
+            },]	
+        });
+        return res.json(receitasUsuario);
     }
 };

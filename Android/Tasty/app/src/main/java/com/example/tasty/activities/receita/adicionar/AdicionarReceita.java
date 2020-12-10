@@ -53,6 +53,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 
 public class AdicionarReceita extends AppCompatActivity {
@@ -63,7 +64,7 @@ public class AdicionarReceita extends AppCompatActivity {
 
     int rec = 1;
     Bitmap bitmap;
-    String imagemTransformada = "";
+    byte[] imagemTransformada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class AdicionarReceita extends AppCompatActivity {
                 if (isCamposValidos(rendimento, tempoDePreparo, titulo, categoriaSelecionada))
                 {
                     try {
-                        Receita novaReceita = new Receita(Integer.parseInt(rendimento), Integer.parseInt(tempoDePreparo), titulo, addIngredientes, addPreparo, imagemTransformada);
+                        Receita novaReceita = new Receita(Integer.parseInt(rendimento), Integer.parseInt(tempoDePreparo), titulo, addIngredientes, addPreparo);
 
                         SessionManagement session =  new SessionManagement(v.getContext());
                         int idUsuario = session.getSessionId();
@@ -169,6 +170,13 @@ public class AdicionarReceita extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 openDialogEditIngredientes(position);
+            }
+        });
+        ExpandableHeightListView listViewPreparo = findViewById(R.id.listViewPreparo);
+        listViewPreparo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openDialogEditPreparo(position);
             }
         });
 
@@ -271,7 +279,7 @@ public class AdicionarReceita extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 listaIngredientes.remove(position);
-                AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.ingrediente_item, listaIngredientes);
+                AddIngredienteAdapter adapter = new AddIngredienteAdapter(v.getContext(), R.layout.ingrediente_item, listaIngredientes);
                 ExpandableHeightListView listViewIngredientes = findViewById(R.id.listViewIngredientes);
                 listViewIngredientes.setExpanded(true);
                 listViewIngredientes.setAdapter(adapter);
@@ -283,7 +291,7 @@ public class AdicionarReceita extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 listaIngredientes.set(position, edtEditIngredientes.getText().toString());
-                AddPreparoAdapter adapter = new AddPreparoAdapter(v.getContext(), R.layout.ingrediente_item, listaIngredientes);
+                AddIngredienteAdapter adapter = new AddIngredienteAdapter(v.getContext(), R.layout.ingrediente_item, listaIngredientes);
                 ExpandableHeightListView listViewIngredientes = findViewById(R.id.listViewIngredientes);
                 listViewIngredientes.setExpanded(true);
                 listViewIngredientes.setAdapter(adapter);
@@ -362,7 +370,7 @@ public class AdicionarReceita extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == rec && requestCode == RESULT_OK)
+        if(requestCode == rec && resultCode == RESULT_OK)
         {
             Uri uri = data.getData();
             try
@@ -381,6 +389,6 @@ public class AdicionarReceita extends AppCompatActivity {
 
         byte[] vetorDeByte = baite.toByteArray();
 
-        imagemTransformada = Base64.encodeToString(vetorDeByte, Base64.DEFAULT);
+        imagemTransformada = vetorDeByte;
     }
 }
